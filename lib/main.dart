@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ticked/services/auth_service.dart';
-import 'package:ticked/utils/authentication_wrapper.dart';
+import 'package:ticked/utils/splash.dart';
 
 import 'models/custom_user.dart';
 
@@ -35,6 +35,6 @@ class MyApp extends StatelessWidget {
               // is not restarted.
               primarySwatch: Colors.blue,
             ),
-            home: const AuthenticationWrapper()));
+            home: const Splash()));
   }
 }
