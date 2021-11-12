@@ -38,7 +38,7 @@ class _SettingsPage extends State<SettingsPage> {
                   size: 24.0,
                 ),
                 label: const Text(
-                  'ustawienia konta użytkownika',
+                  'edycja danych użytkonika',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 15,
