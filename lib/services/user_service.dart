@@ -9,17 +9,6 @@ class UserService {
       String name, String surname, String phone, String code) async {
     if (code == "null") {
       try {
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-        await firebaseFirestore
-            .collection("users")
-            .doc(_auth.currentUser!.uid)
-            .update({"name": name, "surname": surname, "status": true});
-      } on FirebaseAuthException catch (e) {
-        print(e.toString());
-      }
-    } else {
-      try {
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
         await firebaseFirestore
             .collection("users")
             .doc(_auth.currentUser!.uid)
@@ -27,7 +16,22 @@ class UserService {
           "name": name,
           "surname": surname,
           "status": true,
-          "role": 'admin'
+          "phone": phone
+        });
+      } on FirebaseAuthException catch (e) {
+        print(e.toString());
+      }
+    } else {
+      try {
+        await firebaseFirestore
+            .collection("users")
+            .doc(_auth.currentUser!.uid)
+            .update({
+          "name": name,
+          "surname": surname,
+          "status": true,
+          "role": 'admin',
+          "phone": phone
         });
       } on FirebaseAuthException catch (e) {
         print(e.toString());

@@ -200,16 +200,6 @@ class _UserDataPage extends State<UserDataPage> {
                     const SizedBox(
                       height: 30,
                     ),
-                    // Switch(
-                    //   value: isVisible,
-                    //   onChanged: (value) {
-                    //     setState(() {
-                    //       isVisible = value;
-                    //     });
-                    //   },
-                    //   activeTrackColor: Colors.indigo,
-                    //   activeColor: Colors.indigoAccent,
-                    // ),
                     Visibility(
                       visible: isVisible,
                       child: Column(

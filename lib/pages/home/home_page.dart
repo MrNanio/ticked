@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ticked/pages/settings/settings_page.dart';
-import 'package:ticked/services/auth_service.dart';
+import 'package:ticked/widgets/menu_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,35 +12,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-  final AuthService _auth = AuthService();
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
+  static final List<Widget> _widgetOptions = <Widget>[
+    const Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    const Text(
+      'Index 1: Rezerwacje',
+      style: optionStyle,
+    ),
+    const Text(
+      'Index 2: Bilety',
+      style: optionStyle,
+    ),
+    const MenuWidget()
+  ];
 
   @override
   Widget build(BuildContext context) {
-    int _selectedIndex = 0;
-    const TextStyle optionStyle =
-        TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
-    const List<Widget> _widgetOptions = <Widget>[
-      Text(
-        'Index 0: Home',
-        style: optionStyle,
-      ),
-      Text(
-        'Index 1: Rezerwacje',
-        style: optionStyle,
-      ),
-      Text(
-        'Index 2: Bilety',
-        style: optionStyle,
-      ),
-    ];
-
-    void _onItemTapped(int index) {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -75,20 +74,8 @@ class _HomePage extends State<HomePage> {
               ))
         ],
       ),
-      body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('users')
-            .doc(_auth.uid)
-            .snapshots(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else if (snapshot.hasData) {
-            return Center(child: Text('${snapshot.data!['role']}'));
-          }
-          return const LinearProgressIndicator();
-        },
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -102,14 +89,16 @@ class _HomePage extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.airplane_ticket_rounded),
-            backgroundColor: Colors.black,
             label: 'Bilety',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu),
+            label: 'Menu',
           ),
         ],
         currentIndex: _selectedIndex,
         unselectedItemColor: Colors.grey,
-        showUnselectedLabels: true,
-        selectedItemColor: Colors.amber[900],
+        selectedItemColor: Colors.indigo,
         onTap: _onItemTapped,
       ),
     );
