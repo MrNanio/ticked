@@ -34,10 +34,10 @@ class _MenuWidgetState extends State<MenuWidget> {
                     (route) => false,
                   );
                 },
-                child: const SizedBox(
-                  width: 170,
-                  height: 170,
-                  child: Text('wyloguj się'),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 2 - 25,
+                  height: MediaQuery.of(context).size.width / 2 - 25,
+                  child: const Text('wyloguj się'),
                 ),
               ),
             ),
@@ -47,10 +47,10 @@ class _MenuWidgetState extends State<MenuWidget> {
                 onTap: () {
                   print('Card tapped.');
                 },
-                child: const SizedBox(
-                  width: 170,
-                  height: 170,
-                  child: Text('dane użytkownika'),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 2 - 25,
+                  height: MediaQuery.of(context).size.width / 2 - 25,
+                  child: const Text('dane użytkownika'),
                 ),
               ),
             ),
@@ -65,10 +65,10 @@ class _MenuWidgetState extends State<MenuWidget> {
                 onTap: () {
                   print('Card tapped.');
                 },
-                child: const SizedBox(
-                  width: 170,
-                  height: 170,
-                  child: Text('trasy'),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 2 - 25,
+                  height: MediaQuery.of(context).size.width / 2 - 25,
+                  child: const Text('trasy'),
                 ),
               ),
             ),
@@ -78,10 +78,10 @@ class _MenuWidgetState extends State<MenuWidget> {
                 onTap: () {
                   print('Card tapped.');
                 },
-                child: const SizedBox(
-                  width: 170,
-                  height: 170,
-                  child: Text('bilety'),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width / 2 - 25,
+                  height: MediaQuery.of(context).size.width / 2 - 25,
+                  child: const Text('bilety'),
                 ),
               ),
             ),
