@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ticked/pages/flights/search_flight.dart';
-import 'package:ticked/pages/settings/settings_page.dart';
 import 'package:ticked/widgets/menu_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+  final myKey = new GlobalKey<_HomePage>();
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -40,6 +40,7 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: myKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
@@ -50,29 +51,8 @@ class _HomePage extends State<HomePage> {
         centerTitle: true,
         backgroundColor: Colors.indigo,
         elevation: 0.0,
-        actions: <Widget>[
-          TextButton.icon(
-              onPressed: () async {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SettingsPage()),
-                );
-              },
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.white,
-                size: 30,
-              ),
-              label: const Text(
-                '',
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.white,
-                ),
-              ))
-        ],
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(

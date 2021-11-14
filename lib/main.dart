@@ -36,11 +36,11 @@ class MyApp extends StatelessWidget {
               // is not restarted.
               primarySwatch: Colors.blue,
             ),
-            localizationsDelegates: [
+            localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate
             ],
-            supportedLocales: [
-              const Locale('pl')
+            supportedLocales: const [
+              Locale('pl')
             ],
             home: const Splash()));
   }
