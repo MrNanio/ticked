@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ticked/pages/admin/routes/routes_widget.dart';
-import 'package:ticked/pages/user/home/search_flight.dart';
+import 'package:ticked/pages/admin/tickets/tickets_widget.dart';
 import 'package:ticked/widgets/menu_widget.dart';
 
 import 'flights/flights_widget.dart';
@@ -14,7 +14,7 @@ class AdminHomePage extends StatefulWidget {
 }
 
 class _AdminHomePageState extends State<AdminHomePage> {
-  final myKey = new GlobalKey<_AdminHomePageState>();
+  final myKey = GlobalKey<_AdminHomePageState>();
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -23,17 +23,10 @@ class _AdminHomePageState extends State<AdminHomePage> {
     });
   }
 
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-
   static final List<Widget> _widgetOptions = <Widget>[
     const RoutesWidget(),
-    //const RoutesWidget(),
     const FlightsWidget(),
-    const Text(
-      'Index 2: Bilety',
-      style: optionStyle,
-    ),
+    const TicketsWidget(),
     const MenuWidget()
   ];
 

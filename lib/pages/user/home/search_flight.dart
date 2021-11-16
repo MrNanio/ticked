@@ -10,12 +10,10 @@ class SearchFlight extends StatefulWidget {
 }
 
 class _SearchFlightState extends State<SearchFlight> {
-
-  TextEditingController _dateEditingController = TextEditingController();
+  final TextEditingController _dateEditingController = TextEditingController();
   String _start = '';
   String _end = '';
   DateTime? _selectedDate;
-
 
   @override
   Widget build(BuildContext context) {
@@ -26,40 +24,48 @@ class _SearchFlightState extends State<SearchFlight> {
           children: [
             Form(
                 child: Column(
-                  children: [
-                    SizedBox(height: 20.0,),
-                    TextFormField(
-                      decoration: textInputDecoration.copyWith(hintText: 'Miasto odlotu'),
-
+              children: [
+                const SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                  decoration:
+                      textInputDecoration.copyWith(hintText: 'Miasto odlotu'),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                  decoration:
+                      textInputDecoration.copyWith(hintText: 'Miasto przylotu'),
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                TextFormField(
+                  decoration:
+                      textInputDecoration.copyWith(hintText: 'Data podróży'),
+                  focusNode: AlwaysDisabledFocusNode(),
+                  controller: _dateEditingController,
+                  onTap: () {
+                    _selectDate(context);
+                  },
+                ),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                MaterialButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Wyszukaj bilet',
+                      style: TextStyle(color: Colors.white),
                     ),
-                    SizedBox(height: 20.0,),
-                    TextFormField(
-                      decoration: textInputDecoration.copyWith(hintText: 'Miasto przylotu'),
-
-                    ),
-                    SizedBox(height: 20.0,),
-                    TextFormField(
-                      decoration: textInputDecoration.copyWith(hintText: 'Data podróży'),
-                      focusNode: AlwaysDisabledFocusNode(),
-                      controller: _dateEditingController,
-                      onTap: () {
-                        _selectDate(context);
-                      },
-                    ),
-                    SizedBox(height: 20.0,),
-                    MaterialButton(
-                        onPressed: () {},
-                        child: Text('Wyszukaj bilet',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.indigo,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40))
-                    )
-                  ],
-                )
-            ),
-            Divider(),
+                    color: Colors.indigo,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40)))
+              ],
+            )),
+            const Divider(),
           ],
         ),
       ),
@@ -76,10 +82,8 @@ class _SearchFlightState extends State<SearchFlight> {
         builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
-              colorScheme: ColorScheme.fromSwatch(
-                primarySwatch: Colors.indigo
-              )
-            ),
+                colorScheme:
+                    ColorScheme.fromSwatch(primarySwatch: Colors.indigo)),
             child: child!,
           );
         });

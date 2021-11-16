@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ticked/pages/admin/flights/flights_widget.dart';
 import 'package:ticked/pages/user/home/search_flight.dart';
 import 'package:ticked/widgets/menu_widget.dart';
 
@@ -13,7 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-  final myKey = new GlobalKey<_HomePage>();
+  final myKey = GlobalKey<_HomePage>();
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {

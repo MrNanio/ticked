@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class FlightsWidget extends StatefulWidget {
-  const FlightsWidget({Key? key}) : super(key: key);
+class TicketsWidget extends StatefulWidget {
+  const TicketsWidget({Key? key}) : super(key: key);
 
   @override
-  _FlightsWidgetState createState() => _FlightsWidgetState();
+  _TicketsWidgetState createState() => _TicketsWidgetState();
 }
 
-class _FlightsWidgetState extends State<FlightsWidget> {
+class _TicketsWidgetState extends State<TicketsWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,7 +20,7 @@ class _FlightsWidgetState extends State<FlightsWidget> {
             child: const SizedBox(
               width: double.infinity,
               height: 200,
-              child: Center(child: Text('dodaj lot')),
+              child: Center(child: Text('dodaj bilety na lot')),
             )),
         Card(
             shape: RoundedRectangleBorder(
@@ -30,7 +30,7 @@ class _FlightsWidgetState extends State<FlightsWidget> {
             child: const SizedBox(
               width: double.infinity,
               height: 300,
-              child: Center(child: Text('lista dodanych lotów')),
+              child: Center(child: Text('lista dodanych biletów')),
             )),
       ],
     );
