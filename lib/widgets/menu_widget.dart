@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ticked/pages/admin/admin_home_page.dart';
 import 'package:ticked/services/auth_service.dart';
 import 'package:ticked/utils/authentication_wrapper.dart';
 
@@ -16,10 +17,16 @@ class MenuWidget extends StatefulWidget {
 
 class _MenuWidgetState extends State<MenuWidget> {
   final AuthService _auth = AuthService();
-  bool isVisible = true;
+
+
+  bool isVisible = false;
 
   @override
   Widget build(BuildContext context) {
+
+    if(_auth.uid=='Z8GIyyWlyLgODSZ5CP3njjtNBEz2'){
+      isVisible = true;
+    }
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(children: [
@@ -139,7 +146,14 @@ class _MenuWidgetState extends State<MenuWidget> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AdminHomePage(),
+                    ),
+                  );
+                },
                 child: Column(
                   children: [
                     const Icon(Icons.add_location_alt_outlined,

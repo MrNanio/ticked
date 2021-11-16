@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ticked/pages/flights/search_flight.dart';
+import 'package:ticked/pages/admin/routes/routes_widget.dart';
+import 'package:ticked/pages/user/home/search_flight.dart';
 import 'package:ticked/widgets/menu_widget.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+import 'flights/flights_widget.dart';
+
+class AdminHomePage extends StatefulWidget {
+  const AdminHomePage({Key? key}) : super(key: key);
 
   @override
-  _HomePage createState() => _HomePage();
+  _AdminHomePageState createState() => _AdminHomePageState();
 }
 
-class _HomePage extends State<HomePage> {
-  final myKey = new GlobalKey<_HomePage>();
+class _AdminHomePageState extends State<AdminHomePage> {
+  final myKey = new GlobalKey<_AdminHomePageState>();
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -22,14 +24,12 @@ class _HomePage extends State<HomePage> {
   }
 
   static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static final List<Widget> _widgetOptions = <Widget>[
-    const SearchFlight(),
-    const Text(
-      'Index 1: Rezerwacje',
-      style: optionStyle,
-    ),
+    const RoutesWidget(),
+    //const RoutesWidget(),
+    const FlightsWidget(),
     const Text(
       'Index 2: Bilety',
       style: optionStyle,
@@ -58,12 +58,12 @@ class _HomePage extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.airplanemode_active_outlined),
-            label: 'Home',
+            icon: Icon(Icons.alt_route_outlined),
+            label: 'Trasy',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.article_outlined),
-            label: 'Rezerwacje',
+            icon: Icon(Icons.airplanemode_active_outlined),
+            label: 'Loty',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.airplane_ticket_rounded),
