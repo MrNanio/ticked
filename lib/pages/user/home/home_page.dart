@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ticked/pages/user/home/search_flight.dart';
+import 'package:ticked/pages/user/flights/search_flight.dart';
 import 'package:ticked/widgets/menu_widget.dart';
 
 class HomePage extends StatefulWidget {
