@@ -47,7 +47,11 @@ class _SearchFlightState extends State<SearchFlight> {
                                     value: airport.city,
                                     child: Text(airport.city),
                                   );
-                                }).toList()),
+                                }).toList(),
+                              onChanged: (val) => setState(() {
+
+                              }),
+                            ),
                             const SizedBox(
                               height: 20.0,
                             ),
@@ -59,7 +63,11 @@ class _SearchFlightState extends State<SearchFlight> {
                                     value: airport.city,
                                     child: Text(airport.city),
                                   );
-                                }).toList()),
+                                }).toList(),
+                              onChanged: (val) => setState(() {
+
+                              }),
+                            ),
                             /*TextFormField(
                               decoration:
                                   textInputDecoration.copyWith(hintText: 'Miasto przylotu'),
