@@ -25,12 +25,13 @@ class _HomePage extends State<HomePage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static final List<Widget> _widgetOptions = <Widget>[
-    const SearchFlight(),
-    //const RoutesWidget(),
     const Text(
-      'Index 2: Rezerwacje',
+      'Index 1: Home',
       style: optionStyle,
     ),
+    //const RoutesWidget(),
+    const SearchFlight(),
+
     const Text(
       'Index 2: Bilety',
       style: optionStyle,

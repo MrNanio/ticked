@@ -15,6 +15,13 @@ class FlightService {
     });
   }
 
+  Stream<List<Flight>> getFlights(String routeId) {
+    return flightsCollection
+        .where('route_uid', isEqualTo: routeId)
+        .snapshots()
+        .map(_flightListFromSnapshot);
+  }
+
   List<Flight> _flightListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((doc) {
       return Flight(
@@ -26,10 +33,5 @@ class FlightService {
           routeId: doc.get('route_uid')
       );
     }).toList();
-  }
-
-  Stream<List<Flight>> get flights {
-    return flightsCollection.snapshots()
-        .map(_flightListFromSnapshot);
   }
 }

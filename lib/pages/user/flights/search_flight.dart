@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ticked/models/airport.dart';
+import 'package:ticked/services/airport_service.dart';
 import 'package:ticked/utils/form_decorators.dart';
 import 'package:intl/intl.dart';
+import 'package:ticked/utils/loading.dart';
 
 class SearchFlight extends StatefulWidget {
   const SearchFlight({Key? key}) : super(key: key);
@@ -22,49 +25,75 @@ class _SearchFlightState extends State<SearchFlight> {
         padding: const EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 10.0),
         child: Column(
           children: [
-            Form(
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Miasto odlotu'),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Miasto przylotu'),
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: 'Data podróży'),
-                      focusNode: AlwaysDisabledFocusNode(),
-                      controller: _dateEditingController,
-                      onTap: () {
-                        _selectDate(context);
-                      },
-                    ),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    MaterialButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Wyszukaj połącznie',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        color: Colors.indigo,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40)))
-                  ],
-            )),
+            StreamBuilder<List<Airport>>(
+                stream: AirportService().airports,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Form(
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            // TextFormField(
+                            //   decoration:
+                            //       textInputDecoration.copyWith(hintText: 'Miasto odlotu'),
+                            // ),
+                            DropdownButtonFormField(
+                                decoration: textInputDecoration.copyWith(
+                                    hintText: 'Miasto odlotu'),
+                                items: snapshot.data!.map((airport) {
+                                  return DropdownMenuItem(
+                                    value: airport.city,
+                                    child: Text(airport.city),
+                                  );
+                                }).toList()),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            DropdownButtonFormField(
+                                decoration: textInputDecoration.copyWith(
+                                    hintText: 'Miasto przylotu'),
+                                items: snapshot.data!.map((airport) {
+                                  return DropdownMenuItem(
+                                    value: airport.city,
+                                    child: Text(airport.city),
+                                  );
+                                }).toList()),
+                            /*TextFormField(
+                              decoration:
+                                  textInputDecoration.copyWith(hintText: 'Miasto przylotu'),
+                            ),*/
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            TextFormField(
+                              decoration: textInputDecoration.copyWith(
+                                  hintText: 'Data podróży'),
+                              focusNode: AlwaysDisabledFocusNode(),
+                              controller: _dateEditingController,
+                              onTap: () {
+                                _selectDate(context);
+                              },
+                            ),
+                            const SizedBox(
+                              height: 20.0,
+                            ),
+                            MaterialButton(
+                                onPressed: () {},
+                                child: const Text(
+                                  'Wyszukaj połącznie',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                color: Colors.indigo,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(40)))
+                          ],
+                    ));
+                  } else {
+                    return Loading();
+                  }
+                }),
             const Divider(),
           ],
         ),
