@@ -13,6 +13,9 @@ class SearchFlight extends StatefulWidget {
 }
 
 class _SearchFlightState extends State<SearchFlight> {
+
+  final _formKey = GlobalKey<FormState>();
+
   final TextEditingController _dateEditingController = TextEditingController();
   final TextEditingController startCityController = TextEditingController();
   final TextEditingController endCityController = TextEditingController();
@@ -30,24 +33,22 @@ class _SearchFlightState extends State<SearchFlight> {
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Form(
+                        key: _formKey,
                         child: Column(
                           children: [
                             const SizedBox(
                               height: 20.0,
                             ),
-                            // TextFormField(
-                            //   decoration:
-                            //       textInputDecoration.copyWith(hintText: 'Miasto odlotu'),
-                            // ),
                             DropdownButtonFormField(
                                 decoration: textInputDecoration.copyWith(
                                     hintText: 'Miasto odlotu'),
                                 items: snapshot.data!.map((airport) {
                                   return DropdownMenuItem(
                                     value: airport.city,
-                                    child: Text(airport.city),
+                                    child: Text(airport.city + "-"+ airport.iataCode),
                                   );
                                 }).toList(),
+                              validator: (val) => val == null ? 'Wybierz miasto odlotu' : null,
                               onChanged: (val) => setState(() {
 
                               }),
@@ -61,17 +62,14 @@ class _SearchFlightState extends State<SearchFlight> {
                                 items: snapshot.data!.map((airport) {
                                   return DropdownMenuItem(
                                     value: airport.city,
-                                    child: Text(airport.city),
+                                    child: Text(airport.city + "-"+ airport.iataCode),
                                   );
                                 }).toList(),
+                              validator: (val) => val == null ? 'Wybierz miasto przylotu' : null,
                               onChanged: (val) => setState(() {
 
                               }),
                             ),
-                            /*TextFormField(
-                              decoration:
-                                  textInputDecoration.copyWith(hintText: 'Miasto przylotu'),
-                            ),*/
                             const SizedBox(
                               height: 20.0,
                             ),
@@ -80,6 +78,7 @@ class _SearchFlightState extends State<SearchFlight> {
                                   hintText: 'Data podróży'),
                               focusNode: AlwaysDisabledFocusNode(),
                               controller: _dateEditingController,
+                              validator: (val) => val!.isEmpty ? 'Wybierz datę podróży': null,
                               onTap: () {
                                 _selectDate(context);
                               },
@@ -88,7 +87,11 @@ class _SearchFlightState extends State<SearchFlight> {
                               height: 20.0,
                             ),
                             MaterialButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  if(_formKey.currentState!.validate()) {
+                                    print("Walidacja działa");
+                                  }
+                                },
                                 child: const Text(
                                   'Wyszukaj połącznie',
                                   style: TextStyle(color: Colors.white),
