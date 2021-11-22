@@ -17,7 +17,7 @@ class AirportService {
     }
 
     Stream<List<Airport>> get airports {
-        return airportsCollection.snapshots()
+        return airportsCollection.orderBy('city').snapshots()
             .map(_airportListFromSnapshot);
     }
 }
