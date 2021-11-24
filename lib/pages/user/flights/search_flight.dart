@@ -105,7 +105,6 @@ class _SearchFlightState extends State<SearchFlight> {
                   return Loading();
                 }
               }),
-          const Divider(),
         ],
       ),
     );
