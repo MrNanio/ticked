@@ -5,6 +5,11 @@ class AirportService {
 
     final CollectionReference airportsCollection = FirebaseFirestore.instance.collection('airports');
 
+    Stream<List<Airport>> get airports {
+        return airportsCollection.orderBy('city').snapshots()
+            .map(_airportListFromSnapshot);
+    }
+
     List<Airport> _airportListFromSnapshot(QuerySnapshot snapshot){
         return snapshot.docs.map((doc) {
             return Airport(
@@ -14,10 +19,5 @@ class AirportService {
                 name: doc.get('name') ?? '',
             );
         }).toList();
-    }
-
-    Stream<List<Airport>> get airports {
-        return airportsCollection.orderBy('city').snapshots()
-            .map(_airportListFromSnapshot);
     }
 }
