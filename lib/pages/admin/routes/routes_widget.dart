@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ticked/models/airport.dart';
+import 'package:ticked/services/airport_service.dart';
+import 'package:ticked/utils/form_decorators.dart';
+import 'package:ticked/utils/loading.dart';
 
 class RoutesWidget extends StatefulWidget {
   const RoutesWidget({Key? key}) : super(key: key);
@@ -16,11 +20,76 @@ class _RoutesWidgetState extends State<RoutesWidget> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            color: Colors.blueGrey,
-            child: const SizedBox(
+            color: Colors.grey[400],
+            child: SizedBox(
               width: double.infinity,
               height: 400,
-              child: Center(child: Text('dodaj trasy')),
+              child: Column(
+                children: [
+                  StreamBuilder<List<Airport>>(
+                      stream: AirportService().airports,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Form(
+                              child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+                              // TextFormField(
+                              //   decoration:
+                              //       textInputDecoration.copyWith(hintText: 'Miasto odlotu'),
+                              // ),
+                              DropdownButtonFormField(
+                                decoration: textInputDecoration.copyWith(
+                                    hintText: 'Miasto odlotu'),
+                                items: snapshot.data!.map((airport) {
+                                  return DropdownMenuItem(
+                                    value: airport.city,
+                                    child: Text(airport.city),
+                                  );
+                                }).toList(),
+                                onChanged: (val) => setState(() {}),
+                              ),
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+                              DropdownButtonFormField(
+                                decoration: textInputDecoration.copyWith(
+                                    hintText: 'Miasto przylotu'),
+                                items: snapshot.data!.map((airport) {
+                                  return DropdownMenuItem(
+                                    value: airport.city,
+                                    child: Text(airport.city),
+                                  );
+                                }).toList(),
+                                onChanged: (val) => setState(() {}),
+                              ),
+                              /*TextFormField(
+                              decoration:
+                                  textInputDecoration.copyWith(hintText: 'Miasto przylotu'),
+                            ),*/
+                              const SizedBox(
+                                height: 20.0,
+                              ),
+                              MaterialButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                    'Wyszukaj połącznie',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  color: Colors.indigo,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40)))
+                            ],
+                          ));
+                        } else {
+                          return Loading();
+                        }
+                      }),
+                  const Divider(),
+                ],
+              ),
             )),
         Card(
             shape: RoundedRectangleBorder(
