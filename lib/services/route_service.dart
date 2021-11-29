@@ -6,9 +6,9 @@ import 'package:ticked/models/route.dart';
 class RouteService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference routesCollection =
-  FirebaseFirestore.instance.collection('routes');
+    FirebaseFirestore.instance.collection('routes');
   final CollectionReference userCollection =
-  FirebaseFirestore.instance.collection('users');
+    FirebaseFirestore.instance.collection('users');
 
 
   // Future updateFlightData(ar.Route r) async {

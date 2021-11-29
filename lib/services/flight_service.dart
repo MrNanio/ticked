@@ -5,7 +5,7 @@ class FlightService {
 
   final CollectionReference flightsCollection = FirebaseFirestore.instance.collection('flights');
 
-  Future updateFlightData(Flight f) async {
+  /*Future updateFlightData(Flight f) async {
     return await flightsCollection.doc(f.flightUid).set({
         'capacity': f.capacity,
         'date': f.date,
@@ -13,7 +13,7 @@ class FlightService {
         'flight_code': f.flightCode,
         'route_uid': f.routeId
     });
-  }
+  }*/
 
   Stream<List<Flight>> getFlights(String routeId) {
     return flightsCollection
@@ -22,15 +22,24 @@ class FlightService {
         .map(_flightListFromSnapshot);
   }
 
+  Stream<List<Flight>> getFlightListByIataCodesAndDate(String fromIata, String toIata, String date) {
+    return flightsCollection
+        .where('from_iata', isEqualTo: fromIata)
+        .where('to_iata', isEqualTo: toIata)
+        .where('date', isEqualTo: date)
+        .snapshots()
+        .map(_flightListFromSnapshot);
+  }
+
   List<Flight> _flightListFromSnapshot(QuerySnapshot snapshot){
     return snapshot.docs.map((doc) {
       return Flight(
-          flightUid: doc.id,
           capacity: doc.get('capacity'),
           date: doc.get('date'),
           time: doc.get('time'),
           flightCode: doc.get('flight_code'),
-          routeId: doc.get('route_uid')
+          fromIata: doc.get('from_iata'),
+          toIata: doc.get('to_iata')
       );
     }).toList();
   }
