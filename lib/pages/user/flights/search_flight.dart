@@ -13,6 +13,9 @@ class SearchFlight extends StatefulWidget {
 }
 
 class _SearchFlightState extends State<SearchFlight> {
+
+  final _formKey = GlobalKey<FormState>();
+
   final TextEditingController _dateEditingController = TextEditingController();
   final TextEditingController startCityController = TextEditingController();
   final TextEditingController endCityController = TextEditingController();
@@ -20,91 +23,89 @@ class _SearchFlightState extends State<SearchFlight> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 10.0),
-        child: Column(
-          children: [
-            StreamBuilder<List<Airport>>(
-                stream: AirportService().airports,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Form(
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 20.0,
-                            ),
-                            // TextFormField(
-                            //   decoration:
-                            //       textInputDecoration.copyWith(hintText: 'Miasto odlotu'),
-                            // ),
-                            DropdownButtonFormField(
-                                decoration: textInputDecoration.copyWith(
-                                    hintText: 'Miasto odlotu'),
-                                items: snapshot.data!.map((airport) {
-                                  return DropdownMenuItem(
-                                    value: airport.city,
-                                    child: Text(airport.city),
-                                  );
-                                }).toList(),
-                              onChanged: (val) => setState(() {
-
-                              }),
-                            ),
-                            const SizedBox(
-                              height: 20.0,
-                            ),
-                            DropdownButtonFormField(
-                                decoration: textInputDecoration.copyWith(
-                                    hintText: 'Miasto przylotu'),
-                                items: snapshot.data!.map((airport) {
-                                  return DropdownMenuItem(
-                                    value: airport.city,
-                                    child: Text(airport.city),
-                                  );
-                                }).toList(),
-                              onChanged: (val) => setState(() {
-
-                              }),
-                            ),
-                            /*TextFormField(
-                              decoration:
-                                  textInputDecoration.copyWith(hintText: 'Miasto przylotu'),
-                            ),*/
-                            const SizedBox(
-                              height: 20.0,
-                            ),
-                            TextFormField(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 10.0),
+      child: Column(
+        children: [
+          StreamBuilder<List<Airport>>(
+              stream: AirportService().airports,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          DropdownButtonFormField(
                               decoration: textInputDecoration.copyWith(
-                                  hintText: 'Data podróży'),
-                              focusNode: AlwaysDisabledFocusNode(),
-                              controller: _dateEditingController,
-                              onTap: () {
-                                _selectDate(context);
+                                  hintText: 'Miasto odlotu'),
+                              items: snapshot.data!.map((airport) {
+                                return DropdownMenuItem(
+                                  value: airport.city,
+                                  child: Text(airport.city + "-"+ airport.iataCode),
+                                );
+                              }).toList(),
+                            validator: (val) => val == null ? 'Wybierz miasto odlotu' : null,
+                            onChanged: (val) => setState(() {
+
+                            }),
+                          ),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          DropdownButtonFormField(
+                              decoration: textInputDecoration.copyWith(
+                                  hintText: 'Miasto przylotu'),
+                              items: snapshot.data!.map((airport) {
+                                return DropdownMenuItem(
+                                  value: airport.city,
+                                  child: Text(airport.city + "-"+ airport.iataCode),
+                                );
+                              }).toList(),
+                            validator: (val) => val == null ? 'Wybierz miasto przylotu' : null,
+                            onChanged: (val) => setState(() {
+
+                            }),
+                          ),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          TextFormField(
+                            decoration: textInputDecoration.copyWith(
+                                hintText: 'Data podróży'),
+                            focusNode: AlwaysDisabledFocusNode(),
+                            controller: _dateEditingController,
+                            validator: (val) => val!.isEmpty ? 'Wybierz datę podróży': null,
+                            onTap: () {
+                              _selectDate(context);
+                            },
+                          ),
+                          const SizedBox(
+                            height: 20.0,
+                          ),
+                          MaterialButton(
+                              height: 50.0,
+                              onPressed: () {
+                                if(_formKey.currentState!.validate()) {
+                                  print("Walidacja działa");
+                                }
                               },
-                            ),
-                            const SizedBox(
-                              height: 20.0,
-                            ),
-                            MaterialButton(
-                                onPressed: () {},
-                                child: const Text(
-                                  'Wyszukaj połącznie',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                                color: Colors.indigo,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(40)))
-                          ],
-                    ));
-                  } else {
-                    return Loading();
-                  }
-                }),
-            const Divider(),
-          ],
-        ),
+                              child: const Text(
+                                'Wyszukaj połącznie',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              color: Colors.indigo,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)))
+                        ],
+                  ));
+                } else {
+                  return Loading();
+                }
+              }),
+        ],
       ),
     );
   }

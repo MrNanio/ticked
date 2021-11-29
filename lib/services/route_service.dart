@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:ticked/models/custom_user.dart';
-import 'package:ticked/models/route.dart' as ar;
+import 'package:ticked/models/route.dart';
 
-class RoutesService {
+class RouteService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference routesCollection =
   FirebaseFirestore.instance.collection('routes');
@@ -20,17 +19,16 @@ class RoutesService {
   //   });
   // }
 
-  Stream<List<ar.Route>> getRoutes(String airlinesCode) {
+  Stream<List<Route>> getRoutes(String airlinesCode) {
     return routesCollection
         .where('airlinesCode', isEqualTo: airlinesCode)
         .snapshots()
         .map(_routesListFromSnapshot);
   }
 
-  List<ar.Route> _routesListFromSnapshot(QuerySnapshot snapshot) {
+  List<Route> _routesListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
-      return ar.Route(
-          routeId: doc.id,
+      return Route(
           toIata: doc.get('toIata'),
           fromIata: doc.get('formIata'),
           airlineCode: doc.get('airlineCode'));
@@ -50,5 +48,23 @@ class RoutesService {
       "toIata": toIata,
       "airlineCode": customUser.airlineCode
     });
+  }
+
+  Stream<List<Route>> getRouteListByIataCodes(String fromIata, String toIata) {
+    return routesCollection
+        .where('from_iata', isEqualTo: fromIata)
+        .where('to_iata', isEqualTo: toIata)
+        .snapshots()
+        .map(_routeListFromSnapshot);
+  }
+
+  List<Route> _routeListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs.map((doc) {
+      return Route(
+        airlineCode: doc.get('airline_Code')  ?? '',
+        fromIata: doc.get('from_iata') ?? '',
+        toIata: doc.get('to_iata') ?? '',
+      );
+    }).toList();
   }
 }

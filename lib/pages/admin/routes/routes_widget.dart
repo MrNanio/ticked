@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticked/models/airport.dart';
 import 'package:ticked/services/airport_service.dart';
-import 'package:ticked/services/routes_service.dart';
+import 'package:ticked/services/route_service.dart';
 import 'package:ticked/utils/form_decorators.dart';
 import 'package:ticked/utils/loading.dart';
 
@@ -13,7 +13,7 @@ class RoutesWidget extends StatefulWidget {
 }
 
 class _RoutesWidgetState extends State<RoutesWidget> {
-  final RoutesService routesService = RoutesService();
+  final RouteService routeService = RouteService();
   String fromIata = "";
   String toIata = "";
   @override
@@ -85,7 +85,7 @@ class _RoutesWidgetState extends State<RoutesWidget> {
                               ),
                               MaterialButton(
                                   onPressed: () async {
-                                    await routesService.addRoute(fromIata, toIata);
+                                    await routeService.addRoute(fromIata, toIata);
                                   },
                                   child: const Text(
                                     'Dodaj',

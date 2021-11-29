@@ -14,4 +14,17 @@ var textInputDecoration = InputDecoration(
           color: Colors.red,
           width: 2.0,
         ),
-        borderRadius: BorderRadius.circular(10.0)));
+        borderRadius: BorderRadius.circular(10.0)),
+    errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.indigo,
+          width: 2.0,
+        ),
+        borderRadius: BorderRadius.circular(10.0)),
+    focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.red,
+          width: 2.0,
+        ),
+        borderRadius: BorderRadius.circular(10.0))
+);
