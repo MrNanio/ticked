@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticked/models/airport.dart';
 import 'package:ticked/services/airport_service.dart';
+import 'package:ticked/services/routes_service.dart';
 import 'package:ticked/utils/form_decorators.dart';
 import 'package:ticked/utils/loading.dart';
 
@@ -12,6 +13,9 @@ class RoutesWidget extends StatefulWidget {
 }
 
 class _RoutesWidgetState extends State<RoutesWidget> {
+  final RoutesService routesService = RoutesService();
+  String fromIata = "";
+  String toIata = "";
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,10 +24,10 @@ class _RoutesWidgetState extends State<RoutesWidget> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            color: Colors.grey[400],
+            color: Colors.white,
             child: SizedBox(
               width: double.infinity,
-              height: 400,
+              height: 300,
               child: Column(
                 children: [
                   StreamBuilder<List<Airport>>(
@@ -36,6 +40,8 @@ class _RoutesWidgetState extends State<RoutesWidget> {
                               const SizedBox(
                                 height: 20.0,
                               ),
+                              Text("Z "),
+
                               // TextFormField(
                               //   decoration:
                               //       textInputDecoration.copyWith(hintText: 'Miasto odlotu'),
@@ -49,11 +55,14 @@ class _RoutesWidgetState extends State<RoutesWidget> {
                                     child: Text(airport.city),
                                   );
                                 }).toList(),
-                                onChanged: (val) => setState(() {}),
+                                onChanged: (val) => setState(() {
+                                  fromIata = val.toString();
+                                }),
                               ),
                               const SizedBox(
                                 height: 20.0,
                               ),
+                              Text("do "),
                               DropdownButtonFormField(
                                 decoration: textInputDecoration.copyWith(
                                     hintText: 'Miasto przylotu'),
@@ -63,7 +72,9 @@ class _RoutesWidgetState extends State<RoutesWidget> {
                                     child: Text(airport.city),
                                   );
                                 }).toList(),
-                                onChanged: (val) => setState(() {}),
+                                onChanged: (val) => setState(() {
+                                  toIata = val.toString();
+                                }),
                               ),
                               /*TextFormField(
                               decoration:
@@ -73,21 +84,23 @@ class _RoutesWidgetState extends State<RoutesWidget> {
                                 height: 20.0,
                               ),
                               MaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    await routesService.addRoute(fromIata, toIata);
+                                  },
                                   child: const Text(
-                                    'Wyszukaj połącznie',
+                                    'Dodaj',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   color: Colors.indigo,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(40)))
+                                      borderRadius: BorderRadius.circular(40))),
+
                             ],
                           ));
                         } else {
                           return Loading();
                         }
                       }),
-                  const Divider(),
                 ],
               ),
             )),
@@ -96,10 +109,15 @@ class _RoutesWidgetState extends State<RoutesWidget> {
               borderRadius: BorderRadius.circular(15.0),
             ),
             color: Colors.blue,
-            child: const SizedBox(
+            child: SizedBox(
               width: double.infinity,
               height: 300,
-              child: Center(child: Text('lista dodanych tras')),
+              child: Column(
+                children: [
+
+
+                ],
+              ),
             )),
       ],
     );
