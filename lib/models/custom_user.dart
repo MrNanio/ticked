@@ -5,6 +5,7 @@ class CustomUser {
   String? surname;
   bool status;
   String role;
+  String? airlineCode;
 
   CustomUser(
       {required this.uid,
@@ -12,7 +13,9 @@ class CustomUser {
         this.name,
         this.surname,
         required this.status,
-        required this.role});
+        required this.role,
+        this.airlineCode
+      });
 
   factory CustomUser.fromMap(Map<String, dynamic> map) {
     return CustomUser(
@@ -21,7 +24,9 @@ class CustomUser {
         name: map['name'],
         surname: map['surname'],
         status: map['status'],
-        role: map['role']);
+        role: map['role'],
+        airlineCode: map['airlineCode']
+    );
   }
 
   Map<String, dynamic> toMap() {
@@ -31,7 +36,8 @@ class CustomUser {
       'name': name,
       'surname': surname,
       'status': status,
-      'role': role
+      'role': role,
+      'airlineCode': airlineCode
     };
   }
 }
