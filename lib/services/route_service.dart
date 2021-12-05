@@ -7,11 +7,11 @@ import 'package:ticked/models/route.dart';
 class RouteService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CollectionReference routesCollection =
-    FirebaseFirestore.instance.collection('routes');
+      FirebaseFirestore.instance.collection('routes');
   final CollectionReference userCollection =
-    FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
   final CollectionReference flightsCollection =
-  FirebaseFirestore.instance.collection('flights');
+      FirebaseFirestore.instance.collection('flights');
 
   Future addRoute(String fromIata, String toIata) async {
     var documentSnapshot = await userCollection
@@ -20,7 +20,6 @@ class RouteService {
     var map = (documentSnapshot.docs[0].data() as Map<String, dynamic>);
 
     var customUser = CustomUser.fromMap(map);
-
 
     await routesCollection.add({
       "fromIata": fromIata,
