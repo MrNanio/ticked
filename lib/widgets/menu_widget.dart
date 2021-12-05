@@ -43,49 +43,49 @@ class _MenuWidgetState extends State<MenuWidget> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    StreamBuilder<DocumentSnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(_auth.uid)
-                          .snapshots(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<DocumentSnapshot> snapshot) {
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else if (snapshot.hasData) {
-                          return Text(
-                            '${snapshot.data!['email']}',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ).padding(bottom: 5);
-                        }
-                        return const LinearProgressIndicator();
-                      },
-                    ),
-                    StreamBuilder<DocumentSnapshot>(
-                      stream: FirebaseFirestore.instance
-                          .collection('users')
-                          .doc(_auth.uid)
-                          .snapshots(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<DocumentSnapshot> snapshot) {
-                        if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else if (snapshot.hasData) {
-                          return Text(
-                            '${snapshot.data!['role']}',
-                            style: TextStyle(
-                              color: Colors.white.withOpacity(0.6),
-                              fontSize: 12,
-                            ),
-                          );
-                        }
-                        return const LinearProgressIndicator();
-                      },
-                    ),
+                    // StreamBuilder<DocumentSnapshot>(
+                    //   stream: FirebaseFirestore.instance
+                    //       .collection('users')
+                    //       .doc(_auth.uid)
+                    //       .snapshots(),
+                    //   builder: (BuildContext context,
+                    //       AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    //     if (snapshot.hasError) {
+                    //       return Text('Error: ${snapshot.error}');
+                    //     } else if (snapshot.hasData) {
+                    //       return Text(
+                    //         '${snapshot.data!['email']}',
+                    //         style: const TextStyle(
+                    //           color: Colors.white,
+                    //           fontSize: 18,
+                    //           fontWeight: FontWeight.bold,
+                    //         ),
+                    //       ).padding(bottom: 5);
+                    //     }
+                    //     return const LinearProgressIndicator();
+                    //   },
+                    // ),
+                    // StreamBuilder<DocumentSnapshot>(
+                    //   stream: FirebaseFirestore.instance
+                    //       .collection('users')
+                    //       .doc(_auth.uid)
+                    //       .snapshots(),
+                    //   builder: (BuildContext context,
+                    //       AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    //     if (snapshot.hasError) {
+                    //       return Text('Error: ${snapshot.error}');
+                    //     } else if (snapshot.hasData) {
+                    //       return Text(
+                    //         '${snapshot.data!['role']}',
+                    //         style: TextStyle(
+                    //           color: Colors.white.withOpacity(0.6),
+                    //           fontSize: 12,
+                    //         ),
+                    //       );
+                    //     }
+                    //     return const LinearProgressIndicator();
+                    //   },
+                    // ),
                   ],
                 )
               ],

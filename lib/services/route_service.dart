@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ticked/models/custom_user.dart';
+import 'package:ticked/models/flight.dart';
 import 'package:ticked/models/route.dart';
 
 class RouteService {
@@ -9,15 +10,35 @@ class RouteService {
     FirebaseFirestore.instance.collection('routes');
   final CollectionReference userCollection =
     FirebaseFirestore.instance.collection('users');
+  final CollectionReference flightsCollection =
+  FirebaseFirestore.instance.collection('flights');
+
+  Future addRoute(String fromIata, String toIata) async {
+    var documentSnapshot = await userCollection
+        .where('email', isEqualTo: _auth.currentUser!.email)
+        .get();
+    var map = (documentSnapshot.docs[0].data() as Map<String, dynamic>);
+
+    var customUser = CustomUser.fromMap(map);
 
 
-  // Future updateFlightData(ar.Route r) async {
-  //   return await routesCollection.doc(r.routeId).set({
-  //     'airlineCode': r.airlineCode,
-  //     'fromIata': r.fromIata,
-  //     'toIata': r.toIata
-  //   });
-  // }
+    await routesCollection.add({
+      "fromIata": fromIata,
+      "toIata": toIata,
+      "airlineCode": customUser.airlineCode
+    });
+  }
+
+  Stream<List<Flight>> getFlights() {
+    return flightsCollection.snapshots().map(_flightsListFromSnapshot);
+  }
+
+  List<Flight> _flightsListFromSnapshot(QuerySnapshot snapshot) {
+    var flights = snapshot.docs
+        .map((doc) => Flight.fromMap(doc.data() as Map<String, dynamic>))
+        .toList();
+    return flights;
+  }
 
   Stream<List<Route>> getRoutes(String airlinesCode) {
     return routesCollection
@@ -35,21 +56,6 @@ class RouteService {
     }).toList();
   }
 
-  Future addRoute(String fromIata, String toIata) async {
-    var documentSnapshot = await userCollection
-        .where('email', isEqualTo: _auth.currentUser!.email)
-        .get();
-    var map = (documentSnapshot.docs[0].data() as Map<String, dynamic>);
-
-    var customUser = CustomUser.fromMap(map);
-
-    await routesCollection.add({
-      "fromIata": fromIata,
-      "toIata": toIata,
-      "airlineCode": customUser.airlineCode
-    });
-  }
-
   Stream<List<Route>> getRouteListByIataCodes(String fromIata, String toIata) {
     return routesCollection
         .where('from_iata', isEqualTo: fromIata)
@@ -61,7 +67,7 @@ class RouteService {
   List<Route> _routeListFromSnapshot(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Route(
-        airlineCode: doc.get('airline_Code')  ?? '',
+        airlineCode: doc.get('airline_Code') ?? '',
         fromIata: doc.get('from_iata') ?? '',
         toIata: doc.get('to_iata') ?? '',
       );

@@ -28,7 +28,6 @@ class CustomUser {
         airlineCode: map['airlineCode']
     );
   }
-
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,
