@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:ticked/pages/user/flights/search_flight.dart';
+import 'package:ticked/pages/user/flights/searched_flight_list.dart';
 import 'package:ticked/services/auth_service.dart';
 import 'package:ticked/utils/splash.dart';
 
@@ -42,6 +44,12 @@ class MyApp extends StatelessWidget {
             supportedLocales: const [
               Locale('pl')
             ],
-            home: const Splash()));
+            home: const Splash(),
+          routes: {
+            SearchFlight.routeName: (context) =>
+            const SearchedFlightList(),
+          },
+        )
+    );
   }
 }
