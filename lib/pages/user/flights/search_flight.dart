@@ -8,6 +8,8 @@ import 'package:ticked/utils/loading.dart';
 class SearchFlight extends StatefulWidget {
   const SearchFlight({Key? key}) : super(key: key);
 
+  static const routeName = '/extractArguments';
+
   @override
   _SearchFlightState createState() => _SearchFlightState();
 }
@@ -17,8 +19,8 @@ class _SearchFlightState extends State<SearchFlight> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _dateEditingController = TextEditingController();
-  final TextEditingController startCityController = TextEditingController();
-  final TextEditingController endCityController = TextEditingController();
+  final TextEditingController _startCityController = TextEditingController();
+  final TextEditingController _endCityController = TextEditingController();
   DateTime? _selectedDate;
 
   @override
@@ -43,13 +45,13 @@ class _SearchFlightState extends State<SearchFlight> {
                                   hintText: 'Miasto odlotu'),
                               items: snapshot.data!.map((airport) {
                                 return DropdownMenuItem(
-                                  value: airport.city,
+                                  value: airport.iataCode,
                                   child: Text(airport.city + "-"+ airport.iataCode),
                                 );
                               }).toList(),
                             validator: (val) => val == null ? 'Wybierz miasto odlotu' : null,
                             onChanged: (val) => setState(() {
-
+                                _startCityController.text = val.toString();
                             }),
                           ),
                           const SizedBox(
@@ -60,13 +62,13 @@ class _SearchFlightState extends State<SearchFlight> {
                                   hintText: 'Miasto przylotu'),
                               items: snapshot.data!.map((airport) {
                                 return DropdownMenuItem(
-                                  value: airport.city,
+                                  value: airport.iataCode,
                                   child: Text(airport.city + "-"+ airport.iataCode),
                                 );
                               }).toList(),
                             validator: (val) => val == null ? 'Wybierz miasto przylotu' : null,
                             onChanged: (val) => setState(() {
-
+                              _endCityController.text = val.toString();
                             }),
                           ),
                           const SizedBox(
@@ -89,7 +91,27 @@ class _SearchFlightState extends State<SearchFlight> {
                               height: 50.0,
                               onPressed: () {
                                 if(_formKey.currentState!.validate()) {
-                                  print("Walidacja działa");
+                                  print(_startCityController.text);
+                                  print(_endCityController.text);
+                                  print(_dateEditingController.text);
+                                  Navigator.pushNamed(
+                                      context,
+                                      SearchFlight.routeName,
+                                      arguments: {
+                                          'fromIata': _startCityController.text,
+                                          'toIata': _endCityController.text,
+                                          'date': _dateEditingController.text
+                                      }
+                                   );
+                                  /*Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => SearchedFlightList(
+                                              fromIata: _startCityController.text,
+                                              toIata: _endCityController.text,
+                                              date: _dateEditingController.text)
+                                      )
+                                  );*/
                                 }
                               },
                               child: const Text(
