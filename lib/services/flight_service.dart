@@ -55,6 +55,12 @@ class FlightService {
         .map(_flightListFromSnapshot);
   }
 
+  Stream<List<Flight>> getAllFlights() {
+    return flightsCollection
+        .snapshots()
+        .map(_flightListFromSnapshot);
+  }
+
   Stream<List<Flight>> getFlightListByIataCodesAndDate(
       String fromIata, String toIata, String date) {
     return flightsCollection
