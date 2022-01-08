@@ -45,7 +45,29 @@ class _SearchedFlightListState extends State<SearchedFlightList> {
             if (snapshot.hasData) {
               var flights = snapshot.data;
               if (flights!.isEmpty) {
-                return const Text('Brak lotów');
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 200,),
+                      Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          color: Colors.blue,
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 200,
+                            child: Center(child: Text('Nie znaleziono lotów\ndanego dnia ($date)',
+                                style: const TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ))
+                            ),
+                          )),
+                    ],
+                  ),
+                );
               }
               return ListView.builder(
                   shrinkWrap: true,
@@ -56,7 +78,9 @@ class _SearchedFlightListState extends State<SearchedFlightList> {
                     );
                   });
             }
-            return const Text('Błąd');
+            return const Center(
+              child: Text('Błąd'),
+            );
           },
         ),
       ),
