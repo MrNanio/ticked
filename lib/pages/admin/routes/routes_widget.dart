@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticked/models/airport.dart';
-import 'package:ticked/models/flight.dart';
+import 'package:ticked/models/route.dart' as model;
+import 'package:ticked/pages/admin/routes/routes_tile_view.dart';
 import 'package:ticked/services/airport_service.dart';
 import 'package:ticked/services/route_service.dart';
 import 'package:ticked/utils/form_decorators.dart';
@@ -25,7 +26,7 @@ class _RoutesWidgetState extends State<RoutesWidget> {
         const Padding(
             padding: EdgeInsets.symmetric(vertical: 3, horizontal: 0),
             child: Text(
-              "Trasa lotu",
+              "TRASY",
               style: TextStyle(fontSize: 20),
             )),
         Card(
@@ -67,7 +68,7 @@ class _RoutesWidgetState extends State<RoutesWidget> {
                                       hintText: 'Początek trasy'),
                                   items: snapshot.data!.map((airport) {
                                     return DropdownMenuItem(
-                                      value: airport.city,
+                                      value: airport.iataCode,
                                       child: Text(airport.city),
                                     );
                                   }).toList(),
@@ -93,7 +94,7 @@ class _RoutesWidgetState extends State<RoutesWidget> {
                                       hintText: 'Koniec trasy'),
                                   items: snapshot.data!.map((airport) {
                                     return DropdownMenuItem(
-                                      value: airport.city,
+                                      value: airport.iataCode,
                                       child: Text(airport.city),
                                     );
                                   }).toList(),
@@ -139,29 +140,26 @@ class _RoutesWidgetState extends State<RoutesWidget> {
             ),
             child: SizedBox(
               width: double.infinity,
-              height: 300,
               child: Column(
                 children: [
-                  StreamBuilder<List<Flight>>(
-                    stream: routeService.getFlights(),
+                  StreamBuilder<List<model.Route>>(
+                    stream: routeService.getRoutes(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        var flights = snapshot.data;
+                        var routes = snapshot.data;
 
                         return ListView.builder(
                             shrinkWrap: true,
-                            padding: const EdgeInsets.all(8),
-                            itemCount: flights!.length,
+                            padding: const EdgeInsets.all(12),
+                            itemCount: routes!.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                height: 50,
-                                color: Colors.white,
-                                child: Center(
-                                    child: Text(' ${flights[index].toIata}')),
-                              );
+                              return SingleChildScrollView(
+                                  child: RouteTile(
+                                route: routes[index],
+                              ));
                             });
                       }
-                      return const Text('jestem debilem i nic nie widzę');
+                      return const Text('no data');
                     },
                   )
                 ],

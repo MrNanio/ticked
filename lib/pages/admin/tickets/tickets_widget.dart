@@ -12,6 +12,12 @@ class _TicketsWidgetState extends State<TicketsWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const Padding(
+            padding: EdgeInsets.symmetric(vertical: 3, horizontal: 0),
+            child: Text(
+              "BILETY",
+              style: TextStyle(fontSize: 20),
+            )),
         Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
