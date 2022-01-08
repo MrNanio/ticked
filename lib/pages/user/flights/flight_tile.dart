@@ -25,8 +25,9 @@ class _FlightTileState extends State<FlightTile> {
             radius: 25.0,
             backgroundColor: Colors.red,
           ),
-          title: Text('Data lotu: ${widget.flight.date}, ${widget.flight.time}'),
-          subtitle: Text('Z ${widget.flight.fromIata} do ${widget.flight.toIata}'),
+          title: Text('Data lotu: ${widget.flight.date}, godzina: ${widget.flight.time}'),
+          subtitle: Text('Z ${widget.flight.fromCity}, ${widget.flight.fromCountry} (${widget.flight.fromIata}) \nDo ${widget.flight.toCity}, ${widget.flight.toCountry} (${widget.flight.toIata})'),
+
 
         ),
       ),
