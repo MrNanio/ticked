@@ -56,31 +56,17 @@ class RouteService {
         .map(_routesListFromSnapshot);
   }
 
-  List<Route> _routesListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs
-        .map((doc) => Route.fromMap(doc.data() as Map<String, dynamic>))
-        .toList();
-  }
-
   Stream<List<Route>> getRouteListByIataCodes(String fromIata, String toIata) {
     return routesCollection
         .where('from_iata', isEqualTo: fromIata)
         .where('to_iata', isEqualTo: toIata)
         .snapshots()
-        .map(_routeListFromSnapshot);
+        .map(_routesListFromSnapshot);
   }
 
-  List<Route> _routeListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      return Route(
-          routeCode: doc.get('route_code') ?? '',
-          airlineCode: doc.get('airline_code') ?? '',
-          fromIata: doc.get('from_iata') ?? '',
-          fromCity: doc.get('from_city') ?? '',
-          fromCountry: doc.get('from_country') ?? '',
-          toIata: doc.get('to_iata') ?? '',
-          toCity: doc.get('to_city') ?? '',
-          toCountry: doc.get('to_country') ?? '');
-    }).toList();
+  List<Route> _routesListFromSnapshot(QuerySnapshot snapshot) {
+    return snapshot.docs
+        .map((doc) => Route.fromMap(doc.data() as Map<String, dynamic>))
+        .toList();
   }
 }

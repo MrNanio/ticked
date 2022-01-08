@@ -52,7 +52,7 @@ class FlightService {
     return flightsCollection
         .where('route_uid', isEqualTo: routeId)
         .snapshots()
-        .map(_flightListFromSnapshot);
+        .map(_flightsListFromSnapshot);
   }
 
   Stream<List<Flight>> getFlightListByIataCodesAndDate(
@@ -62,25 +62,8 @@ class FlightService {
         .where('to_iata', isEqualTo: toIata)
         .where('date', isEqualTo: date)
         .snapshots()
-        .map(_flightListFromSnapshot);
+        .map(_flightsListFromSnapshot);
   }
-
-  List<Flight> _flightListFromSnapshot(QuerySnapshot snapshot) {
-    return snapshot.docs.map((doc) {
-      return Flight(
-          capacity: doc.get('capacity'),
-          date: doc.get('date'),
-          time: doc.get('time'),
-          flightCode: doc.get('flight_code'),
-          fromIata: doc.get('from_iata'),
-          toIata: doc.get('to_iata'),
-          fromCity: doc.get('from_city'),
-          toCity: doc.get('to_city'),
-          fromCountry: doc.get('from_country'),
-          toCountry: doc.get('to_country'),
-          airlineCode: doc.get('airline_code'));
-    }).toList();
-  }*/
 
   List<Flight> _flightsListFromSnapshot(QuerySnapshot snapshot) {
     var flights = snapshot.docs
