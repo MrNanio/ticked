@@ -18,7 +18,7 @@ class _SearchFlightState extends State<SearchFlight> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _dateEditingController = TextEditingController();
+  final TextEditingController _datePickController = TextEditingController();
   final TextEditingController _startCityController = TextEditingController();
   final TextEditingController _endCityController = TextEditingController();
   DateTime? _selectedDate;
@@ -78,7 +78,7 @@ class _SearchFlightState extends State<SearchFlight> {
                             decoration: textInputDecoration.copyWith(
                                 hintText: 'Data podróży'),
                             focusNode: AlwaysDisabledFocusNode(),
-                            controller: _dateEditingController,
+                            controller: _datePickController,
                             validator: (val) => val!.isEmpty ? 'Wybierz datę podróży': null,
                             onTap: () {
                               _selectDate(context);
@@ -93,14 +93,14 @@ class _SearchFlightState extends State<SearchFlight> {
                                 if(_formKey.currentState!.validate()) {
                                   print(_startCityController.text);
                                   print(_endCityController.text);
-                                  print(_dateEditingController.text);
+                                  print(_datePickController.text);
                                   Navigator.pushNamed(
                                       context,
                                       SearchFlight.routeName,
                                       arguments: {
                                           'fromIata': _startCityController.text,
                                           'toIata': _endCityController.text,
-                                          'date': _dateEditingController.text
+                                          'date': _datePickController.text
                                       }
                                    );
                                   /*Navigator.push(
@@ -150,10 +150,10 @@ class _SearchFlightState extends State<SearchFlight> {
 
     if (newSelectedDate != null) {
       _selectedDate = newSelectedDate;
-      _dateEditingController
+      _datePickController
         ..text = DateFormat('dd/MM/yyyy').format(_selectedDate!)
         ..selection = TextSelection.fromPosition(TextPosition(
-            offset: _dateEditingController.text.length,
+            offset: _datePickController.text.length,
             affinity: TextAffinity.upstream));
     }
   }
