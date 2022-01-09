@@ -22,7 +22,8 @@ class _MenuWidgetState extends State<MenuWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (_auth.uid == 'Z8GIyyWlyLgODSZ5CP3njjtNBEz2') {
+    if (_auth.uid == 'Z8GIyyWlyLgODSZ5CP3njjtNBEz2' ||
+        _auth.uid == 'WtozQJxEodeXFhRb5QGV6nLJOdZ2') {
       isVisible = true;
     }
     return Padding(

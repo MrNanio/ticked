@@ -51,7 +51,7 @@ class RouteService {
 
   Stream<List<Route>> getRoutes() {
     return routesCollection
-        // .where('airlinesCode', isEqualTo: airlinesCode)
+        // .where('airlines_code', isEqualTo: airlinesCode)
         .snapshots()
         .map(_routesListFromSnapshot);
   }

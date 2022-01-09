@@ -69,7 +69,11 @@ class _RoutesWidgetState extends State<RoutesWidget> {
                                   items: snapshot.data!.map((airport) {
                                     return DropdownMenuItem(
                                       value: airport.iataCode,
-                                      child: Text(airport.city),
+                                      child: Text(airport.city +
+                                          '/' +
+                                          airport.iataCode +
+                                          ', ' +
+                                          airport.country),
                                     );
                                   }).toList(),
                                   onChanged: (val) => setState(() {
@@ -95,7 +99,11 @@ class _RoutesWidgetState extends State<RoutesWidget> {
                                   items: snapshot.data!.map((airport) {
                                     return DropdownMenuItem(
                                       value: airport.iataCode,
-                                      child: Text(airport.city),
+                                      child: Text(airport.city +
+                                          '/' +
+                                          airport.iataCode +
+                                          ', ' +
+                                          airport.country),
                                     );
                                   }).toList(),
                                   onChanged: (val) => setState(() {
@@ -150,7 +158,7 @@ class _RoutesWidgetState extends State<RoutesWidget> {
 
                         return ListView.builder(
                             shrinkWrap: true,
-                            padding: const EdgeInsets.all(12),
+                            padding: const EdgeInsets.all(4),
                             itemCount: routes!.length,
                             itemBuilder: (BuildContext context, int index) {
                               return SingleChildScrollView(
