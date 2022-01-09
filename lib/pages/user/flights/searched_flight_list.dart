@@ -37,52 +37,62 @@ class _SearchedFlightListState extends State<SearchedFlightList> {
         backgroundColor: Colors.indigo,
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: StreamBuilder<List<Flight>>(
-          stream: flightService.getFlightListByIataCodesAndDate(
-              fromIata, toIata, date),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              var flights = snapshot.data;
-              if (flights!.isEmpty) {
-                return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 200,),
-                      Card(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          color: Colors.blue,
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 200,
-                            child: Center(child: Text('Nie znaleziono lotów\ndanego dnia ($date)',
-                                style: const TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                ))
-                            ),
-                          )),
-                    ],
-                  ),
-                );
-              }
-              return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: flights.length,
-                  itemBuilder: (context, index) {
-                    return FlightTile(
-                      flight: flights[index],
+      body: Column(
+        children: [
+          const Padding(
+              padding: EdgeInsets.symmetric(vertical: 3, horizontal: 0),
+              child: Text(
+                "Wyszukane loty",
+                style: TextStyle(fontSize: 20),
+              )),
+          SingleChildScrollView(
+            child: StreamBuilder<List<Flight>>(
+              stream: flightService.getFlightListByIataCodesAndDate(
+                  fromIata, toIata, date),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  var flights = snapshot.data;
+                  if (flights!.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(height: 200,),
+                          Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                              color: Colors.blue,
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: 200,
+                                child: Center(child: Text('Nie znaleziono lotów\ndanego dnia ($date)',
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                    ))
+                                ),
+                              )),
+                        ],
+                      ),
                     );
-                  });
-            }
-            return const Center(
-              child: Text('Błąd'),
-            );
-          },
-        ),
+                  }
+                  return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: flights.length,
+                      itemBuilder: (context, index) {
+                        return FlightTile(
+                          flight: flights[index],
+                        );
+                      });
+                }
+                return const Center(
+                  child: Text('Błąd'),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
