@@ -16,7 +16,7 @@ class FlightService {
   final CollectionReference flightsCollection =
       FirebaseFirestore.instance.collection('flights');
 
-  Future addFlight(String routeCode, String date) async {
+  Future addFlight(String routeCode, String date, String time, String capacity) async {
     //give user and airlinie data
     var documentSnapshot = await userCollection
         .where('email', isEqualTo: _auth.currentUser!.email)
@@ -34,9 +34,9 @@ class FlightService {
     var uuid = const Uuid();
 
     await flightsCollection.add({
-      'capacity': "capacity",
-      'date': "2021-12-31",
-      'time': "13:00:00",
+      'capacity': capacity,
+      'date': date,
+      'time': time,
       'flight_code': uuid.v4(),
       'from_iata': route.fromIata,
       'from_city': route.fromCity,
