@@ -22,12 +22,14 @@ class _RouteTileState extends State<RouteTile> {
       child: Card(
         margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
-          leading: const CircleAvatar(
-            radius: 25.0,
-            backgroundColor: Colors.red,
-          ),
-          title: Text('Data lotu:  ${widget.route.airlineCode}'),
-          subtitle: Text('Z ${widget.route.fromIata} do ${widget.route.toIata}'),
+          leading: const Icon(Icons.airplanemode_active),
+
+          // const CircleAvatar(
+          //   radius: 25.0,
+          //   backgroundColor: Colors.red,
+          // ),
+          title: Text('z: ${widget.route.fromCity+'/'+widget.route.fromIata}'),
+          subtitle: Text('do: ${widget.route.toCity+'/'+widget.route.toIata}'),
 
         ),
       ),

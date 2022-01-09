@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:ticked/models/airport.dart';
+import 'package:ticked/models/flight.dart';
 import 'package:ticked/models/route.dart' as model;
 import 'package:ticked/services/airport_service.dart';
 import 'package:ticked/services/flight_service.dart';
 import 'package:ticked/services/route_service.dart';
 import 'package:ticked/utils/form_decorators.dart';
 import 'package:ticked/utils/loading.dart';
+
+import 'flights_tile_view.dart';
 
 class FlightsWidget extends StatefulWidget {
   const FlightsWidget({Key? key}) : super(key: key);
@@ -221,11 +225,30 @@ class _FlightsWidgetState extends State<FlightsWidget> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            color: Colors.blue,
-            child: const SizedBox(
+            child: SizedBox(
               width: double.infinity,
-              height: 300,
-              child: Center(child: Text('lista dodanych lotów')),
+              child: Column(
+                children: [
+                  StreamBuilder<List<Flight>>(
+                    stream: flightService.getAllFlights(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        var flights = snapshot.data;
+
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(4),
+                            itemCount: flights!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return SingleChildScrollView(
+                                  child: FlightsTile(flight: flights[index]));
+                            });
+                      }
+                      return const Text('no data');
+                    },
+                  )
+                ],
+              ),
             )),
       ],
     );

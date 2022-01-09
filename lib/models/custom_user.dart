@@ -25,7 +25,7 @@ class CustomUser {
         surname: map['surname'],
         status: map['status'],
         role: map['role'],
-        airlineCode: map['airlineCode']
+        airlineCode: map['airline_code']
     );
   }
   Map<String, dynamic> toMap() {
@@ -36,7 +36,7 @@ class CustomUser {
       'surname': surname,
       'status': status,
       'role': role,
-      'airlineCode': airlineCode
+      'airline_code': airlineCode
     };
   }
 }
