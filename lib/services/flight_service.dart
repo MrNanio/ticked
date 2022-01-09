@@ -58,7 +58,7 @@ class FlightService {
   Stream<List<Flight>> getAllFlights() {
     return flightsCollection
         .snapshots()
-        .map(_flightListFromSnapshot);
+        .map(_flightsListFromSnapshot);
   }
 
   Stream<List<Flight>> getFlightListByIataCodesAndDate(

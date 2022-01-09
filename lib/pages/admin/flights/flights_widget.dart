@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'package:ticked/models/airport.dart';
 import 'package:ticked/models/flight.dart';
 import 'package:ticked/models/route.dart' as model;
 import 'package:ticked/services/airport_service.dart';
@@ -51,7 +50,7 @@ class _FlightsWidgetState extends State<FlightsWidget> {
             color: Colors.white,
             child: SizedBox(
               width: double.infinity,
-              height: 700,
+              height: 600,
               child: Column(
                 children: [
                   StreamBuilder<List<model.Route>>(
