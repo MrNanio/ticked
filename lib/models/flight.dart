@@ -3,6 +3,7 @@ class Flight {
   final String date;
   final String time;
   final String flightCode;
+  final String routeCode;
   final String fromIata;
   final String toIata;
   final String fromCity;
@@ -16,6 +17,7 @@ class Flight {
       required this.date,
       required this.time,
       required this.flightCode,
+      required this.routeCode,
       required this.fromIata,
       required this.toIata,
       required this.fromCity,
@@ -29,6 +31,7 @@ class Flight {
         capacity: map['capacity'],
         date: map['date'],
         flightCode: map['flight_code'],
+        routeCode: map['route_code'],
         fromIata: map['from_iata'],
         toIata: map['to_iata'],
         time: map['time'],
@@ -44,6 +47,7 @@ class Flight {
       'capacity': capacity,
       'date': date,
       'flight_code': flightCode,
+      'route_code': routeCode,
       'from_iata': fromIata,
       'to_iata': toIata,
       'time': time,

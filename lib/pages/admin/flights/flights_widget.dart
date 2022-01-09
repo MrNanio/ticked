@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:ticked/models/airport.dart';
 import 'package:ticked/models/flight.dart';
 import 'package:ticked/models/route.dart' as model;
 import 'package:ticked/services/airport_service.dart';
@@ -175,12 +176,11 @@ class _FlightsWidgetState extends State<FlightsWidget> {
                                         _capacityController.text =
                                             val.toString();
                                       }),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(16),
-                                        border:
-                                            Border.all(color: Colors.black26),
-                                      ),
                                     ),
+                                    /*TextFormField(
+                                decoration:
+                                    textInputDecoration.copyWith(hintText: 'Miasto przylotu'),
+                            ),*/
                                     const SizedBox(
                                       height: 20.0,
                                     ),
