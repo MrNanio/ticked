@@ -16,7 +16,8 @@ class FlightService {
   final CollectionReference flightsCollection =
       FirebaseFirestore.instance.collection('flights');
 
-  Future addFlight(String routeCode, String date, String time, String capacity) async {
+  Future addFlight(
+      String routeCode, String date, String time, String capacity) async {
     //give user and airlinie data
     var documentSnapshot = await userCollection
         .where('email', isEqualTo: _auth.currentUser!.email)
@@ -38,6 +39,7 @@ class FlightService {
       'date': date,
       'time': time,
       'flight_code': uuid.v4(),
+      'route_code': routeCode,
       'from_iata': route.fromIata,
       'from_city': route.fromCity,
       'from_country': route.fromCountry,
@@ -56,9 +58,7 @@ class FlightService {
   }
 
   Stream<List<Flight>> getAllFlights() {
-    return flightsCollection
-        .snapshots()
-        .map(_flightsListFromSnapshot);
+    return flightsCollection.snapshots().map(_flightsListFromSnapshot);
   }
 
   Stream<List<Flight>> getFlightListByIataCodesAndDate(

@@ -98,20 +98,14 @@ class TicketService {
     });
   }
 
-  Future addTickets(String routeCode, String flightCode, int ticketClassA,
-      int ticketClassB, int ticketClassC) async {
+  Future addTickets(String flightCode, int ticketClassA, int ticketClassB,
+      int ticketClassC) async {
     //give user and airlinie data
     var documentSnapshot = await userCollection
         .where('email', isEqualTo: _auth.currentUser!.email)
         .get();
     var map = (documentSnapshot.docs[0].data() as Map<String, dynamic>);
     var customUser = CustomUser.fromMap(map);
-
-    //give route
-    var routeFromDb =
-        await routesCollection.where('route_code', isEqualTo: routeCode).get();
-    var mapRoute = (routeFromDb.docs[0].data() as Map<String, dynamic>);
-    var route = Route.fromMap(mapRoute);
 
     //give flight
     var flightFromDb = await flightsCollection
@@ -147,9 +141,9 @@ class TicketService {
     //give uid
     var uuid = const Uuid();
 
-    for (var i = 1; i >= ticketClassA; i++) {
+    for (var i = 1; i <= ticketClassA; i++) {
       await ticketsCollection.add({
-        'route_code': routeCode,
+        'route_code': flight.routeCode,
         'airline_code': flight.airlineCode,
         'from_iata': flight.fromIata,
         'from_city': flight.fromCity,
@@ -166,9 +160,9 @@ class TicketService {
       });
     }
 
-    for (var i = 0; i > ticketClassB; i++) {
+    for (var i = 1; i <= ticketClassB; i++) {
       await ticketsCollection.add({
-        'route_code': routeCode,
+        'route_code': flight.routeCode,
         'airline_code': flight.airlineCode,
         'from_iata': flight.fromIata,
         'from_city': flight.fromCity,
@@ -185,9 +179,9 @@ class TicketService {
       });
     }
 
-    for (var i = 0; i > ticketClassC; i++) {
+    for (var i = 1; i <= ticketClassC; i++) {
       await ticketsCollection.add({
-        'route_code': routeCode,
+        'route_code': flight.routeCode,
         'airline_code': flight.airlineCode,
         'from_iata': flight.fromIata,
         'from_city': flight.fromCity,

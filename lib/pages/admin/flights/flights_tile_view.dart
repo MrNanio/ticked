@@ -19,10 +19,18 @@ class _FlightsTileState extends State<FlightsTile> {
         margin: const EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
           leading: const Icon(Icons.airplanemode_active),
-          title: Text(
-              widget.flight.fromCity + '/' + widget.flight.fromIata +' > '+widget.flight.toCity + '/' + widget.flight.toIata),
-          subtitle:
-              Text(widget.flight.date + '/' + widget.flight.time),
+          title: Text(widget.flight.fromCity +
+              '/' +
+              widget.flight.fromIata +
+              ' > ' +
+              widget.flight.toCity +
+              '/' +
+              widget.flight.toIata),
+          subtitle: Text(widget.flight.date +
+              '/' +
+              widget.flight.time +
+              ' Miejsc: ' +
+              widget.flight.capacity),
         ),
       ),
     );
