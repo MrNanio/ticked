@@ -21,12 +21,11 @@ class _FlightTileState extends State<FlightTile> {
       child: Card(
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
-          leading: CircleAvatar(
-            radius: 25.0,
-            backgroundColor: Colors.red,
-          ),
+          leading: const Icon(Icons.airplanemode_on_rounded,
+          color: Colors.indigo,
+          size: 36.0,),
           title: Text('Data lotu: ${widget.flight.date}, godzina: ${widget.flight.time}'),
-          subtitle: Text('Z ${widget.flight.fromCity}, ${widget.flight.fromCountry} (${widget.flight.fromIata}) \nDo ${widget.flight.toCity}, ${widget.flight.toCountry} (${widget.flight.toIata})'),
+          subtitle: Text('Z: ${widget.flight.fromCity}, ${widget.flight.fromCountry} (${widget.flight.fromIata}) \nDo: ${widget.flight.toCity}, ${widget.flight.toCountry} (${widget.flight.toIata})'),
 
 
         ),
