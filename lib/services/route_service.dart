@@ -24,9 +24,8 @@ class RouteService {
     var map = (documentSnapshot.docs[0].data() as Map<String, dynamic>);
     var customUser = CustomUser.fromMap(map);
     //give start airport
-    var fromAirport = await airportCollection
-        .where('iata_code', isEqualTo: fromIata)
-        .get();
+    var fromAirport =
+        await airportCollection.where('iata_code', isEqualTo: fromIata).get();
     var mapAirportFrom = (fromAirport.docs[0].data() as Map<String, dynamic>);
     var startAirport = Airport.fromMap(mapAirportFrom);
     //give end airport
@@ -50,8 +49,18 @@ class RouteService {
   }
 
   Stream<List<Route>> getRoutes() {
+    return routesCollection.snapshots().map(_routesListFromSnapshot);
+  }
+
+  Future<Stream<List<Route>>> getRoutesByAirline() async {
+    //give user and airlinie data
+    var documentSnapshot = await userCollection
+        .where('email', isEqualTo: _auth.currentUser!.email)
+        .get();
+    var map = (documentSnapshot.docs[0].data() as Map<String, dynamic>);
+    var customUser = CustomUser.fromMap(map);
     return routesCollection
-        // .where('airlines_code', isEqualTo: airlinesCode)
+        .where('airlines_code', isEqualTo: customUser.airlineCode)
         .snapshots()
         .map(_routesListFromSnapshot);
   }

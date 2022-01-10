@@ -3,6 +3,7 @@ import 'package:ticked/models/flight.dart';
 
 class FlightTile extends StatefulWidget {
   //const FlightTile({Key? key}) : super(key: key);
+  static const routeName = '/extractArgumen';
 
   FlightTile({required this.flight});
 
@@ -10,7 +11,6 @@ class FlightTile extends StatefulWidget {
 
   @override
   _FlightTileState createState() => _FlightTileState();
-
 }
 
 class _FlightTileState extends State<FlightTile> {
@@ -21,13 +21,22 @@ class _FlightTileState extends State<FlightTile> {
       child: Card(
         margin: EdgeInsets.fromLTRB(20.0, 6.0, 20.0, 0.0),
         child: ListTile(
-          leading: const Icon(Icons.airplanemode_on_rounded,
-          color: Colors.indigo,
-          size: 36.0,),
-          title: Text('Data lotu: ${widget.flight.date}, godzina: ${widget.flight.time}'),
-          subtitle: Text('Z: ${widget.flight.fromCity}, ${widget.flight.fromCountry} (${widget.flight.fromIata}) \nDo: ${widget.flight.toCity}, ${widget.flight.toCountry} (${widget.flight.toIata})'),
-
-
+          leading: const Icon(
+            Icons.airplanemode_on_rounded,
+            color: Colors.indigo,
+            size: 36.0,
+          ),
+          title: Text(
+              '${widget.flight.time} | ${widget.flight.date} \n${widget.flight.airlineName}'),
+          subtitle:
+              Text('Z: ${widget.flight.fromCity}, ${widget.flight.fromCountry} '
+                  '(${widget.flight.fromIata}) \nDo: ${widget.flight.toCity}, '
+                  '${widget.flight.toCountry} (${widget.flight.toIata})'),
+          onTap: () {
+            Navigator.pushNamed(context, FlightTile.routeName, arguments: {
+              'flightCode': widget.flight.flightCode,
+            });
+          },
         ),
       ),
     );

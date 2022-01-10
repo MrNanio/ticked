@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:ticked/pages/user/flights/flight_tile.dart';
 import 'package:ticked/pages/user/flights/search_flight.dart';
 import 'package:ticked/pages/user/flights/searched_flight_list.dart';
+import 'package:ticked/pages/user/tickets/ticket_book_widget.dart';
 import 'package:ticked/services/auth_service.dart';
 import 'package:ticked/utils/splash.dart';
 
@@ -47,7 +49,9 @@ class MyApp extends StatelessWidget {
             home: const Splash(),
           routes: {
             SearchFlight.routeName: (context) =>
-            const SearchedFlightList(),
+              const SearchedFlightList(),
+            FlightTile.routeName : (context) =>
+                const TicketBookWidget()
           },
         )
     );

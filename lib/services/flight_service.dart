@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:ticked/models/airline.dart';
 import 'package:ticked/models/custom_user.dart';
 import 'package:ticked/models/flight.dart';
 import 'package:ticked/models/route.dart';
@@ -15,6 +16,8 @@ class FlightService {
       FirebaseFirestore.instance.collection('users');
   final CollectionReference flightsCollection =
       FirebaseFirestore.instance.collection('flights');
+  final CollectionReference airlinesCollection =
+  FirebaseFirestore.instance.collection('airlines');
 
   Future addFlight(
       String routeCode, String date, String time, String capacity) async {
@@ -24,6 +27,12 @@ class FlightService {
         .get();
     var map = (documentSnapshot.docs[0].data() as Map<String, dynamic>);
     var customUser = CustomUser.fromMap(map);
+
+    //give airline
+    var airlineFromDb =
+    await airlinesCollection.where('code', isEqualTo: customUser.airlineCode).get();
+    var mapAirline = (airlineFromDb.docs[0].data() as Map<String, dynamic>);
+    var airline = Airline.fromMap(mapAirline);
 
     //give route
     var routeFromDb =
@@ -46,7 +55,8 @@ class FlightService {
       'to_iata': route.toIata,
       'to_city': route.toCity,
       'to_country': route.toCountry,
-      'airline_code': customUser.airlineCode
+      'airline_code': customUser.airlineCode,
+      'airline_name': airline.name
     });
   }
 
@@ -55,6 +65,16 @@ class FlightService {
         .where('route_uid', isEqualTo: routeId)
         .snapshots()
         .map(_flightsListFromSnapshot);
+  }
+
+  Future<DocumentSnapshot<Object?>> getFlight(String flightCode) async {
+
+    QuerySnapshot querySnapshot = await flightsCollection
+        .where('flight_code', isEqualTo: flightCode)
+        .get();
+    QueryDocumentSnapshot doc = querySnapshot.docs[0];
+    DocumentReference docRef = doc.reference;
+    return docRef.snapshots().first;
   }
 
   Stream<List<Flight>> getAllFlights() {
