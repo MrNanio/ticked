@@ -57,6 +57,16 @@ class FlightService {
         .map(_flightsListFromSnapshot);
   }
 
+  Future<DocumentSnapshot<Object?>> getFlight(String flightCode) async {
+
+    QuerySnapshot querySnapshot = await flightsCollection
+        .where('flight_code', isEqualTo: flightCode)
+        .get();
+    QueryDocumentSnapshot doc = querySnapshot.docs[0];
+    DocumentReference docRef = doc.reference;
+    return docRef.snapshots().first;
+  }
+
   Stream<List<Flight>> getAllFlights() {
     return flightsCollection.snapshots().map(_flightsListFromSnapshot);
   }
