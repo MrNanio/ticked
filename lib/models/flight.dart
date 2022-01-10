@@ -1,5 +1,7 @@
 class Flight {
-  final String capacity;
+  final String capacityClassA;
+  final String capacityClassB;
+  final String capacityClassC;
   final String date;
   final String time;
   final String flightCode;
@@ -14,23 +16,28 @@ class Flight {
   final String airlineName;
 
   Flight(
-      {required this.capacity,
-      required this.date,
-      required this.time,
-      required this.flightCode,
-      required this.routeCode,
-      required this.fromIata,
-      required this.toIata,
-      required this.fromCity,
-      required this.toCity,
-      required this.fromCountry,
-      required this.toCountry,
-      required this.airlineCode,
-      required this.airlineName});
+      {required this.capacityClassA,
+        required this.capacityClassB,
+        required this.capacityClassC,
+        required this.date,
+        required this.time,
+        required this.flightCode,
+        required this.routeCode,
+        required this.fromIata,
+        required this.toIata,
+        required this.fromCity,
+        required this.toCity,
+        required this.fromCountry,
+        required this.toCountry,
+        required this.airlineCode,
+        required this.airlineName});
 
   factory Flight.fromMap(Map<String, dynamic> map) {
     return Flight(
-        capacity: map['capacity'],
+
+        capacityClassA: map['capacity_class_A'],
+        capacityClassB: map['capacity_class_B'],
+        capacityClassC: map['capacity_class_C'],
         date: map['date'],
         flightCode: map['flight_code'],
         routeCode: map['route_code'],
@@ -47,7 +54,9 @@ class Flight {
 
   Map<String, dynamic> toMap() {
     return {
-      'capacity': capacity,
+      'capacity_class_A': capacityClassA,
+      'capacity_class_B': capacityClassB,
+      'capacity_class_C': capacityClassC,
       'date': date,
       'flight_code': flightCode,
       'route_code': routeCode,

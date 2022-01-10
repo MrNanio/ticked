@@ -29,8 +29,12 @@ class _FlightsTileState extends State<FlightsTile> {
           subtitle: Text(widget.flight.date +
               '/' +
               widget.flight.time +
-              ' Miejsc: ' +
-              widget.flight.capacity),
+              ' Miejsc klasy A: ' +
+              widget.flight.capacityClassA + ',' +
+              ' Miejsc klasy B: ' +
+              widget.flight.capacityClassB + ',' +
+              ' Miejsc klasy C: ' +
+              widget.flight.capacityClassC ),
         ),
       ),
     );

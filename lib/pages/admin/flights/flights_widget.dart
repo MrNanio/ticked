@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'package:ticked/models/airport.dart';
 import 'package:ticked/models/flight.dart';
 import 'package:ticked/models/route.dart' as model;
 import 'package:ticked/services/airport_service.dart';
@@ -29,8 +28,12 @@ class _FlightsWidgetState extends State<FlightsWidget> {
   final TextEditingController _routeCodeController = TextEditingController();
   final TextEditingController _datePickController = TextEditingController();
   final TextEditingController _timePickController = TextEditingController();
-  final TextEditingController _capacityController = TextEditingController();
-  int _currentCapacityIntValue = 0;
+  final TextEditingController _capacityClassAController = TextEditingController();
+  final TextEditingController _capacityClassBController = TextEditingController();
+  final TextEditingController _capacityClassCController = TextEditingController();
+  int _currentCapacityClassAIntValue = 0;
+  int _currentCapacityClassBIntValue = 0;
+  int _currentCapacityClassCIntValue = 0;
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
 
@@ -51,7 +54,7 @@ class _FlightsWidgetState extends State<FlightsWidget> {
             color: Colors.white,
             child: SizedBox(
               width: double.infinity,
-              height: 600,
+              height: 800,
               child: Column(
                 children: [
                   StreamBuilder<List<model.Route>>(
@@ -157,7 +160,7 @@ class _FlightsWidgetState extends State<FlightsWidget> {
                                     Row(children: const [
                                       Icon(Icons.airplanemode_active),
                                       Text(
-                                        "Liczba miejsc",
+                                        "Liczba miejsc klasy A",
                                         style: TextStyle(fontSize: 20),
                                       )
                                     ]),
@@ -165,22 +168,70 @@ class _FlightsWidgetState extends State<FlightsWidget> {
                                       height: 20.0,
                                     ),
                                     NumberPicker(
-                                      value: _currentCapacityIntValue,
+                                      value: _currentCapacityClassAIntValue,
                                       minValue: 0,
                                       maxValue: 250,
                                       step: 1,
                                       itemHeight: 50,
                                       axis: Axis.horizontal,
                                       onChanged: (val) => setState(() {
-                                        _currentCapacityIntValue = val;
-                                        _capacityController.text =
+                                        _currentCapacityClassAIntValue = val;
+                                        _capacityClassAController.text =
                                             val.toString();
                                       }),
                                     ),
-                                    /*TextFormField(
-                                decoration:
-                                    textInputDecoration.copyWith(hintText: 'Miasto przylotu'),
-                            ),*/
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Row(children: const [
+                                      Icon(Icons.airplanemode_active),
+                                      Text(
+                                        "Liczba miejsc klasy B",
+                                        style: TextStyle(fontSize: 20),
+                                      )
+                                    ]),
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    NumberPicker(
+                                      value: _currentCapacityClassBIntValue,
+                                      minValue: 0,
+                                      maxValue: 250,
+                                      step: 1,
+                                      itemHeight: 50,
+                                      axis: Axis.horizontal,
+                                      onChanged: (val) => setState(() {
+                                        _currentCapacityClassBIntValue = val;
+                                        _capacityClassBController.text =
+                                            val.toString();
+                                      }),
+                                    ),
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    Row(children: const [
+                                      Icon(Icons.airplanemode_active),
+                                      Text(
+                                        "Liczba miejsc klasy C",
+                                        style: TextStyle(fontSize: 20),
+                                      )
+                                    ]),
+                                    const SizedBox(
+                                      height: 20.0,
+                                    ),
+                                    NumberPicker(
+                                      value: _currentCapacityClassCIntValue,
+                                      minValue: 0,
+                                      maxValue: 250,
+                                      step: 1,
+                                      itemHeight: 50,
+                                      axis: Axis.horizontal,
+                                      onChanged: (val) => setState(() {
+                                        _currentCapacityClassCIntValue = val;
+                                        _capacityClassCController.text =
+                                            val.toString();
+                                      }),
+                                    ),
                                     const SizedBox(
                                       height: 20.0,
                                     ),
@@ -194,7 +245,9 @@ class _FlightsWidgetState extends State<FlightsWidget> {
                                                   _routeCodeController.text,
                                                   _datePickController.text,
                                                   _timePickController.text,
-                                                  _capacityController.text);
+                                                  _capacityClassAController.text,
+                                                  _capacityClassBController.text,
+                                                  _capacityClassCController.text);
                                             }
                                             setState(() {
                                               resetForm();
@@ -297,13 +350,17 @@ class _FlightsWidgetState extends State<FlightsWidget> {
   }
 
   void resetForm() {
-    _currentCapacityIntValue = 0;
+    _currentCapacityClassAIntValue = 0;
+    _currentCapacityClassBIntValue = 0;
+    _currentCapacityClassCIntValue = 0;
     _selectedDate = null;
     _selectedTime = null;
     _routeCodeController.clear();
     _datePickController.clear();
     _timePickController.clear();
-    _capacityController.clear();
+    _capacityClassAController.clear();
+    _capacityClassBController.clear();
+    _capacityClassCController.clear();
   }
 }
 

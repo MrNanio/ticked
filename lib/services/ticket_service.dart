@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ticked/models/custom_user.dart';
 import 'package:ticked/models/flight.dart';
-import 'package:ticked/models/route.dart';
 import 'package:ticked/models/ticket.dart';
 import 'package:uuid/uuid.dart';
 
@@ -19,84 +18,6 @@ class TicketService {
   final CollectionReference ticketsCollection =
       FirebaseFirestore.instance.collection('tickets');
 
-  Future addTicket(
-      String routeCode, String flightCode, String ticketClass) async {
-    //give user and airlinie data
-    var documentSnapshot = await userCollection
-        .where('email', isEqualTo: _auth.currentUser!.email)
-        .get();
-    var map = (documentSnapshot.docs[0].data() as Map<String, dynamic>);
-    var customUser = CustomUser.fromMap(map);
-
-    //give route
-    var routeFromDb =
-        await routesCollection.where('route_code', isEqualTo: routeCode).get();
-    var mapRoute = (routeFromDb.docs[0].data() as Map<String, dynamic>);
-    var route = Route.fromMap(mapRoute);
-    //give flight
-    var flightFromDb = await flightsCollection
-        .where('flight_code', isEqualTo: flightCode)
-        .get();
-    var mapFlight = (flightFromDb.docs[0].data() as Map<String, dynamic>);
-    var flight = Flight.fromMap(mapFlight);
-
-    //zarezerwowany, niezarezerwowany, niezaakceptowany
-    //sprawdzenie warunków ładowności
-    var ticketsClassAFromDb = await flightsCollection
-        .where('flight_code', isEqualTo: flightCode)
-        .where('class_of_ticket', isEqualTo: 'A')
-        .get();
-    var ticketsClassBFromDb = await flightsCollection
-        .where('flight_code', isEqualTo: flightCode)
-        .where('class_of_ticket', isEqualTo: 'B')
-        .get();
-    var ticketsClassCFromDb = await flightsCollection
-        .where('flight_code', isEqualTo: flightCode)
-        .where('class_of_ticket', isEqualTo: 'C')
-        .get();
-
-    var sumFromDB = ticketsClassAFromDb.size +
-        ticketsClassBFromDb.size +
-        ticketsClassCFromDb.size;
-
-    if (int.parse(flight.capacity) < sumFromDB + 1) {
-      //wyjątek przekroczona ładowność
-    }
-
-    var seatNumber = '0';
-    if (ticketClass == 'A') {
-      var numTic = ticketsClassAFromDb.size + 1;
-      seatNumber = 'CLA' + numTic.toString();
-    }
-    if (ticketClass == 'B') {
-      var numTic = ticketsClassBFromDb.size + 1;
-      seatNumber = 'CLB' + numTic.toString();
-    }
-    if (ticketClass == 'C') {
-      var numTic = ticketsClassCFromDb.size + 1;
-      seatNumber = 'CLC' + numTic.toString();
-    }
-
-    //give uid
-    var uuid = const Uuid();
-
-    await ticketsCollection.add({
-      'route_code': routeCode,
-      'airline_code': flight.airlineCode,
-      'from_iata': flight.fromIata,
-      'from_city': flight.fromCity,
-      'from_country': flight.fromCountry,
-      'to_iata': flight.toIata,
-      'to_city': flight.toCity,
-      'to_country': flight.toCountry,
-      'class_of_ticket': ticketClass,
-      'flight_id': flightCode,
-      'seat_number': seatNumber,
-      'ticket_code': uuid.v4(),
-      'ticket_status': 'niezarezerwowany',
-      'user_id': 'null'
-    });
-  }
 
   Future addTickets(String flightCode, int ticketClassA, int ticketClassB,
       int ticketClassC) async {
@@ -116,15 +37,15 @@ class TicketService {
 
     //zarezerwowany, niezarezerwowany, niezaakceptowany
     //sprawdzenie warunków ładowności
-    var ticketsClassAFromDb = await flightsCollection
+    var ticketsClassAFromDb = await ticketsCollection
         .where('flight_code', isEqualTo: flightCode)
         .where('class_of_ticket', isEqualTo: 'A')
         .get();
-    var ticketsClassBFromDb = await flightsCollection
+    var ticketsClassBFromDb = await ticketsCollection
         .where('flight_code', isEqualTo: flightCode)
         .where('class_of_ticket', isEqualTo: 'B')
         .get();
-    var ticketsClassCFromDb = await flightsCollection
+    var ticketsClassCFromDb = await ticketsCollection
         .where('flight_code', isEqualTo: flightCode)
         .where('class_of_ticket', isEqualTo: 'C')
         .get();
@@ -133,10 +54,23 @@ class TicketService {
         ticketsClassBFromDb.size +
         ticketsClassCFromDb.size;
 
-    int sum = ticketClassA + ticketClassB + ticketClassC;
+
+    if (ticketsClassAFromDb.size + ticketClassA > int.parse(flight.capacityClassA)) {
+        //wyjątek przekroczona ładowność klasa A
+    }
+
+    if (ticketsClassBFromDb.size + ticketClassB > int.parse(flight.capacityClassB)) {
+      //wyjątek przekroczona ładowność klasa B
+    }
+
+    if (ticketsClassCFromDb.size + ticketClassC > int.parse(flight.capacityClassC)) {
+      //wyjątek przekroczona ładowność klasa C
+    }
+
+    /*int sum = ticketClassA + ticketClassB + ticketClassC;
     if (sum > int.parse(flight.capacity) - sumFromDB) {
       //wyjątek przekroczona ładowność
-    }
+    }*/
 
     //give uid
     var uuid = const Uuid();

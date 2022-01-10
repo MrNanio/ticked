@@ -20,7 +20,7 @@ class FlightService {
   FirebaseFirestore.instance.collection('airlines');
 
   Future addFlight(
-      String routeCode, String date, String time, String capacity) async {
+      String routeCode, String date, String time, String capacityClassA, String capacityClassB, String capacityClassC) async {
     //give user and airlinie data
     var documentSnapshot = await userCollection
         .where('email', isEqualTo: _auth.currentUser!.email)
@@ -44,7 +44,9 @@ class FlightService {
     var uuid = const Uuid();
 
     await flightsCollection.add({
-      'capacity': capacity,
+      'capacity_class_A': capacityClassA,
+      'capacity_class_B': capacityClassB,
+      'capacity_class_C': capacityClassC,
       'date': date,
       'time': time,
       'flight_code': uuid.v4(),
