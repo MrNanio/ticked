@@ -26,12 +26,12 @@ class _FlightTileState extends State<FlightTile> {
             color: Colors.indigo,
             size: 36.0,
           ),
-          title:
+          title: Text(
+              '${widget.flight.time} | ${widget.flight.date} \n${widget.flight.airlineName}'),
+          subtitle:
               Text('Z: ${widget.flight.fromCity}, ${widget.flight.fromCountry} '
                   '(${widget.flight.fromIata}) \nDo: ${widget.flight.toCity}, '
                   '${widget.flight.toCountry} (${widget.flight.toIata})'),
-          subtitle: Text(
-              'Data lotu: ${widget.flight.date}, godzina: ${widget.flight.time}\nLinia: ${widget.flight.airlineName}'),
           onTap: () {
             Navigator.pushNamed(context, FlightTile.routeName, arguments: {
               'flightCode': widget.flight.flightCode,
