@@ -63,6 +63,13 @@ class _TicketBookWidgetState extends State<TicketBookWidget> {
                             fontWeight: FontWeight.bold,
                           ),
                         ).padding(bottom: 5),
+                        Text(
+                          '${snapshot.data!['airline_name']}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 18
+                          ),
+                        ).padding(bottom: 5),
                       ]);
                     }
                     return const LinearProgressIndicator();

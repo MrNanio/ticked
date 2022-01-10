@@ -11,6 +11,7 @@ class Flight {
   final String fromCountry;
   final String toCountry;
   final String airlineCode;
+  final String airlineName;
 
   Flight(
       {required this.capacity,
@@ -24,7 +25,8 @@ class Flight {
       required this.toCity,
       required this.fromCountry,
       required this.toCountry,
-      required this.airlineCode});
+      required this.airlineCode,
+      required this.airlineName});
 
   factory Flight.fromMap(Map<String, dynamic> map) {
     return Flight(
@@ -39,7 +41,8 @@ class Flight {
         toCity: map['to_city'],
         fromCountry: map['from_country'],
         toCountry: map['to_country'],
-        airlineCode: map['airline_code']);
+        airlineCode: map['airline_code'],
+        airlineName: map['airline_name']);
   }
 
   Map<String, dynamic> toMap() {
@@ -55,7 +58,8 @@ class Flight {
       'to_city': toCity,
       'from_country': fromCountry,
       'to_country': toCountry,
-      'airline_code': airlineCode
+      'airline_code': airlineCode,
+      'airline_name': airlineName
     };
   }
 }

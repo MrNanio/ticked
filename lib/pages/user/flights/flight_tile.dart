@@ -7,12 +7,10 @@ class FlightTile extends StatefulWidget {
 
   FlightTile({required this.flight});
 
-
   final Flight flight;
 
   @override
   _FlightTileState createState() => _FlightTileState();
-
 }
 
 class _FlightTileState extends State<FlightTile> {
@@ -28,20 +26,16 @@ class _FlightTileState extends State<FlightTile> {
             color: Colors.indigo,
             size: 36.0,
           ),
-          title: Text(
-              'Data lotu: ${widget.flight.date}, godzina: ${widget.flight.time}'),
-          subtitle:
+          title:
               Text('Z: ${widget.flight.fromCity}, ${widget.flight.fromCountry} '
                   '(${widget.flight.fromIata}) \nDo: ${widget.flight.toCity}, '
                   '${widget.flight.toCountry} (${widget.flight.toIata})'),
-          onTap: (){
-            Navigator.pushNamed(
-                context,
-                FlightTile.routeName,
-                arguments: {
-                  'flightCode': widget.flight.flightCode,
-                }
-            );
+          subtitle: Text(
+              'Data lotu: ${widget.flight.date}, godzina: ${widget.flight.time}\nLinia: ${widget.flight.airlineName}'),
+          onTap: () {
+            Navigator.pushNamed(context, FlightTile.routeName, arguments: {
+              'flightCode': widget.flight.flightCode,
+            });
           },
         ),
       ),
