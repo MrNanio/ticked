@@ -85,6 +85,8 @@ class TicketService {
         'to_iata': flight.toIata,
         'to_city': flight.toCity,
         'to_country': flight.toCountry,
+        'date': flight.date,
+        'time': flight.time,
         'class_of_ticket': "A",
         'flight_id': flightCode,
         'seat_number': 'CLA' + (i + ticketsClassAFromDb.size).toString(),
@@ -104,6 +106,8 @@ class TicketService {
         'to_iata': flight.toIata,
         'to_city': flight.toCity,
         'to_country': flight.toCountry,
+        'date': flight.date,
+        'time': flight.time,
         'class_of_ticket': "B",
         'flight_id': flightCode,
         'seat_number': 'CLB' + (i + ticketsClassBFromDb.size).toString(),
@@ -123,6 +127,8 @@ class TicketService {
         'to_iata': flight.toIata,
         'to_city': flight.toCity,
         'to_country': flight.toCountry,
+        'date': flight.date,
+        'time': flight.time,
         'class_of_ticket': "C",
         'flight_id': flightCode,
         'seat_number': 'CLC' + (i + ticketsClassCFromDb.size).toString(),
@@ -186,15 +192,9 @@ class TicketService {
   }
 
   //get user tickets
-  Future<Stream<List<Ticket>>> getUserTickets() async {
-    var documentSnapshot = await userCollection
-        .where('email', isEqualTo: _auth.currentUser!.email)
-        .get();
-    var map = (documentSnapshot.docs[0].data() as Map<String, dynamic>);
-    var customUser = CustomUser.fromMap(map);
-
+  Stream<List<Ticket>> getUserTickets(){
     return ticketsCollection
-        .where('user_id', isEqualTo: customUser.uid)
+        .where('user_id', isEqualTo: _auth.currentUser!.uid)
         .snapshots()
         .map(_ticketsListFromSnapshot);
   }

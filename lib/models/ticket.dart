@@ -8,6 +8,8 @@ class Ticket {
   final String toIata;
   final String toCity;
   final String toCountry;
+  final String date;
+  final String time;
   //ticket
   final String classOfTicket;
   //sprawdzaj z pulą podczas dodawania
@@ -26,6 +28,8 @@ class Ticket {
     required this.toIata,
     required this.toCity,
     required this.toCountry,
+    required this.date,
+    required this.time,
     required this.classOfTicket,
     required this.flightId,
     required this.seatNumber,
@@ -43,6 +47,8 @@ class Ticket {
         toIata: map['to_iata'],
         toCity: map['to_city'],
         toCountry: map['to_country'],
+        date: map['date'],
+        time: map['time'],
         classOfTicket: map['class_of_ticket'],
         flightId: map['flight_id'],
         seatNumber: map['seatNumber'],
@@ -61,6 +67,8 @@ class Ticket {
       'to_iata': toIata,
       'to_city': toCity,
       'to_country': toCountry,
+      'date': date,
+      'time': time,
       'class_of_ticket': classOfTicket,
       'flight_id': flightId,
       'seat_number': seatNumber,
