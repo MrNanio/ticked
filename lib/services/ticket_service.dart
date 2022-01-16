@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ticked/models/custom_user.dart';
 import 'package:ticked/models/flight.dart';
+import 'package:ticked/models/route.dart';
 import 'package:ticked/models/ticket.dart';
 import 'package:uuid/uuid.dart';
 
@@ -18,9 +19,8 @@ class TicketService {
   final CollectionReference ticketsCollection =
       FirebaseFirestore.instance.collection('tickets');
 
-
-  Future addTickets(String flightCode, int ticketClassA, int ticketClassB,
-      int ticketClassC) async {
+  Future addTickets(String flightCode, int ticketClassA,
+      int ticketClassB, int ticketClassC) async {
     //give user and airlinie data
     var documentSnapshot = await userCollection
         .where('email', isEqualTo: _auth.currentUser!.email)
@@ -50,9 +50,9 @@ class TicketService {
         .where('class_of_ticket', isEqualTo: 'C')
         .get();
 
-    var sumFromDB = ticketsClassAFromDb.size +
-        ticketsClassBFromDb.size +
-        ticketsClassCFromDb.size;
+    // var sumFromDB = ticketsClassAFromDb.size +
+    //     ticketsClassBFromDb.size +
+    //     ticketsClassCFromDb.size;
 
 
     if (ticketsClassAFromDb.size + ticketClassA > int.parse(flight.capacityClassA)) {
@@ -162,7 +162,7 @@ class TicketService {
     if (querySnapshot.size == 0) {
       //wywal wyjątek brak miejsca tego
     }
-
+    print(querySnapshot.size);
     QueryDocumentSnapshot doc = querySnapshot.docs[0];
     DocumentReference docRef = doc.reference;
     await docRef
