@@ -14,25 +14,25 @@ class Ticket {
   final String classOfTicket;
   //sprawdzaj z pulą podczas dodawania
   final String flightId;
-  final int seatNumber;
+  final String seatNumber;
   final String ticketCode;
   final String ticketStatus;
   final String userId;
 
-  Ticket({
-    required this.routeCode,
-    required this.airlineCode,
-    required this.fromIata,
-    required this.fromCity,
-    required this.fromCountry,
-    required this.toIata,
-    required this.toCity,
-    required this.toCountry,
-    required this.date,
-    required this.time,
-    required this.classOfTicket,
-    required this.flightId,
-    required this.seatNumber,
+  Ticket(
+      {required this.routeCode,
+      required this.airlineCode,
+      required this.fromIata,
+      required this.fromCity,
+      required this.fromCountry,
+      required this.toIata,
+      required this.toCity,
+      required this.toCountry,
+      required this.date,
+      required this.time,
+      required this.classOfTicket,
+      required this.flightId,
+      required this.seatNumber,
       required this.ticketCode,
       required this.ticketStatus,
       required this.userId});
@@ -51,10 +51,10 @@ class Ticket {
         time: map['time'],
         classOfTicket: map['class_of_ticket'],
         flightId: map['flight_id'],
-        seatNumber: map['seatNumber'],
-        ticketCode: map['ticketCode'],
-        ticketStatus: map['ticketStatus'],
-        userId: map['userId']);
+        seatNumber: map['seat_number'],
+        ticketCode: map['ticket_code'],
+        ticketStatus: map['ticket_status'],
+        userId: map['user_id']);
   }
 
   Map<String, dynamic> toMap() {
