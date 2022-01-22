@@ -56,12 +56,24 @@ class _TicketTileState extends State<TicketTile> {
                 fontSize: 18
             ),
           ).padding(bottom: 5),
-          Text(
-            'Status: ${widget.ticket.ticketStatus}',
-            style: const TextStyle(
-                color: Colors.black,
-                fontSize: 25
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Status: ',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25
+                ),
+              ),
+              Text(
+                widget.ticket.ticketStatus,
+                style: TextStyle(
+                    color: widget.ticket.ticketStatus == 'zarezerwowany' ? Colors.green : Colors.red,
+                    fontSize: 25
+                ),
+              )
+            ],
           ).padding(bottom: 40),
           MaterialButton(
               height: 50.0,

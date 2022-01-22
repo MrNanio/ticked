@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ticked/pages/user/flights/search_flight.dart';
+import 'package:ticked/pages/user/home/reserved_ticket_list.dart';
 import 'package:ticked/pages/user/tickets/user_ticket_widget.dart';
 import 'package:ticked/widgets/menu_widget.dart';
 
@@ -26,13 +27,10 @@ class _HomePage extends State<HomePage> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static final List<Widget> _widgetOptions = <Widget>[
-    const Text(
-      'Index 1: Home',
-      style: optionStyle,
-    ),
-    //const RoutesWidget(),
-    const SearchFlight(),
 
+    const ReservedTicketList(),
+  //const RoutesWidget(),
+    const SearchFlight(),
     const UserTicketsWidget(),
     const MenuWidget()
   ];

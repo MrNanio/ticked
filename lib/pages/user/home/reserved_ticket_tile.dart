@@ -1,19 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:ticked/models/ticket.dart';
-import 'package:flutter/material.dart';
 import 'package:ticked/services/ticket_service.dart';
 
-class TicketTileAdmin extends StatefulWidget {
-  //const TicketTileAdmin({Key? key}) : super(key: key);
-  TicketTileAdmin({required this.ticket});
+class ReservedTicketTile extends StatefulWidget {
+  //const ReservedTicketTile({Key? key}) : super(key: key);
+  ReservedTicketTile({required this.ticket});
 
   final Ticket ticket;
 
   @override
-  _TicketTileAdminState createState() => _TicketTileAdminState();
+  _ReservedTicketTileState createState() => _ReservedTicketTileState();
 }
 
-class _TicketTileAdminState extends State<TicketTileAdmin> {
+class _ReservedTicketTileState extends State<ReservedTicketTile> {
   final TicketService ticketService = TicketService();
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class _TicketTileAdminState extends State<TicketTileAdmin> {
             borderRadius: BorderRadius.circular(15.0)),
         child: SizedBox(
             width: double.infinity,
-            height: 300,
+            height: 200,
             child: Column(children: [
               Text(
                 '${widget.ticket.fromCity}, ${widget.ticket.fromCountry} -> ${widget.ticket.toCity}, ${widget.ticket.toCountry}',
@@ -68,41 +68,12 @@ class _TicketTileAdminState extends State<TicketTileAdmin> {
                   Text(
                     widget.ticket.ticketStatus,
                     style: TextStyle(
-                        color: widget.ticket.ticketStatus == 'zarezerwowany' ? Colors.green : Colors.red,
+                        color: widget.ticket.ticketStatus == 'zarezerwowany' ? Colors.green : Colors.black,
                         fontSize: 25
                     ),
                   )
                 ],
-              ).padding(bottom: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  MaterialButton(
-                      height: 50.0,
-                      onPressed: () {
-                        ticketService.acceptTicket(widget.ticket.ticketCode);
-                      },
-                      child: const Text(
-                        'Akceptuj',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      color: Colors.green,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20))),
-                  MaterialButton(
-                      height: 50.0,
-                      onPressed: () {
-                        ticketService.deleteTicketReservation(widget.ticket.ticketCode);
-                      },
-                      child: const Text(
-                        'Odrzuć',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      color: Colors.red,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20))),
-                ],
-              )
+              ).padding(bottom: 5),
             ])
         ),
       ),

@@ -199,6 +199,14 @@ class TicketService {
         .map(_ticketsListFromSnapshot);
   }
 
+  Stream<List<Ticket>> getReservedUserTickets(){
+    return ticketsCollection
+        .where('user_id', isEqualTo: _auth.currentUser!.uid)
+        .where('ticket_status', isEqualTo: 'zarezerwowany')
+        .snapshots()
+        .map(_ticketsListFromSnapshot);
+  }
+
   Stream<List<Ticket>> getTickets(String flightId) {
     return ticketsCollection
         .where('flight_id', isEqualTo: flightId)
