@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:ticked/models/flight.dart';
+import 'package:ticked/models/ticket.dart';
+import 'package:ticked/pages/admin/tickets/ticket_tile_admin.dart';
 import 'package:ticked/services/airport_service.dart';
 import 'package:ticked/services/flight_service.dart';
 import 'package:ticked/services/route_service.dart';
@@ -232,16 +234,53 @@ class _TicketsWidgetState extends State<TicketsWidget> {
                 ],
               ),
             )),
-        Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            color: Colors.blue,
-            child: const SizedBox(
-              width: double.infinity,
-              height: 300,
-              child: Center(child: Text('lista dodanych biletów')),
-            )),
+        SingleChildScrollView(
+          child: StreamBuilder<List<Ticket>>(
+            stream: ticketService.getUserTickets(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                var tickets = snapshot.data;
+                if (tickets!.isEmpty) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: 200,),
+                        Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.blue,
+                            child: const SizedBox(
+                              width: double.infinity,
+                              height: 200,
+                              child: Center(child: Text('Nie znaleziono biletów',
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                  ))
+                              ),
+                            )),
+                      ],
+                    ),
+                  );
+                }
+                return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: tickets.length,
+                    itemBuilder: (context, index) {
+                      return TicketTileAdmin(
+                        ticket: tickets[index],
+                      );
+                    }
+                );
+              }
+              return const Center(
+                child: Text('Błąd'),
+              );
+            },
+          ),
+        )
       ],
     );
   }

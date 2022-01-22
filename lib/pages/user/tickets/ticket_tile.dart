@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:styled_widget/styled_widget.dart';
 import 'package:ticked/models/ticket.dart';
+import 'package:ticked/services/ticket_service.dart';
+import 'package:ticked/services/ticket_service.dart';
 
 class TicketTile extends StatefulWidget {
   //const TicketTile({Key? key}) : super(key: key);
@@ -13,6 +15,7 @@ class TicketTile extends StatefulWidget {
 }
 
 class _TicketTileState extends State<TicketTile> {
+  final TicketService ticketService = TicketService();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,7 +62,19 @@ class _TicketTileState extends State<TicketTile> {
                 color: Colors.black,
                 fontSize: 25
             ),
-          ).padding(bottom: 5),
+          ).padding(bottom: 40),
+          MaterialButton(
+              height: 50.0,
+              onPressed: () {
+                ticketService.deleteTicketReservation(widget.ticket.ticketCode);
+              },
+              child: const Text(
+                'Anuluj',
+                style: TextStyle(color: Colors.white),
+              ),
+              color: Colors.red,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)))
         ])
       ),
     ),
